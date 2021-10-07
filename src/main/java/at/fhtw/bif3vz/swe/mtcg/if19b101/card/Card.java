@@ -15,16 +15,8 @@ public abstract class Card {
         this.elementType = elementType;
     }
 
-    public String cardString(){
-        return "("+name+": " + damage +")";
-    }
-
     @Override
     public String toString() {
-        return "Card{" +
-                "name='" + name + '\'' +
-                ", damage=" + damage +
-                ", elementType=" + elementType +
-                '}';
+        return "Card{" + name + ", " + damage + "}";
     }
 }

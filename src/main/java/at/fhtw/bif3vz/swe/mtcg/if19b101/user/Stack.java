@@ -6,17 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Stack {
-    List<Card> stackCards;
+    List<Card> stackCards = new ArrayList<>();
 
-    public Stack(List<Card> stackCards) {
-        this.stackCards = stackCards;
+    public Stack(){}//ist zu beginn leer
+
+    public List<Card> getStackCards() {//return all cards in stack
+        return this.stackCards;
     }
 
-    public List<Card> getStackCards() {
-        return stackCards;
+    public List<Card> getBestFourCards(){//return 4 besten karten aus stack
+        List<Card> bestFourCards = new ArrayList<>();
+
+        for(int i = this.stackCards.size();i > this.stackCards.size()-4;i--){//ersten vier -> eigentlich besten vier (vergleich zwischen den karten fehlt)
+            bestFourCards.add(this.stackCards.get(i));
+        }
+
+        return bestFourCards;
     }
 
-    public void setStackCards(List<Card> stackCards) {
-        this.stackCards = stackCards;
+    public void addCardsToStack(List<Card> stackCards){//füge karten zum stack hinzu
+            this.stackCards.addAll(stackCards);
     }
+
+    //public Card tradeCard(){return Card;}
 }

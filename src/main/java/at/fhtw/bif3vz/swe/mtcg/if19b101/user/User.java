@@ -1,7 +1,8 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.user;
 
-
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Package;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,42 +12,49 @@ public class User {
     String password;
     int coins;
     Stack stack;
+    Deck deck;
+    Server server;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.coins = 20;
+        this.stack = new Stack();
+        this.deck = new Deck();
+        this.server = new Server();
     }
 
-    public Stack getStack() {
-        return this.stack;
+    public List<Card> getStack() {//return alle karten als list
+        return this.stack.getStackCards();
     }
 
-    public void setStack(List<Card> allCards) {
-        this.stack = stack;
+    protected void giveBestCardsToDeck(){
+        this.deck.addBestCardsToDeck(this.stack.getBestFourCards());
     }
 
-    public String getUsername() {
-        return username;
+    public List<Card> getDeck() {//return alle karten als list
+        return this.deck.getDeckCards();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    /*public void setStack(List<Card> stackCards) {
+        this.stack.setStackCards(stackCards);
+    }*/
+
+
+    public void aquirePackage(){//hole ein package mit 4 karten vom server und füge diese dem stack hinzu
+        this.stack.addCardsToStack(this.server.getPackageFrom().getPackageCards());
+        this.giveBestCardsToDeck();
     }
 
-    public String getPassword() {
-        return password;
+    public void loginServer(){
+
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
-
-    public void setCoins(int coins) {
-        this.coins = coins;
+    public String everyThingToString(){
+        return "User: name=" + this.username +
+                ", pwd=" + this.password +
+                ", coins=" + this.coins +
+                ", stack: " + stack.getStackCards().toString() + "\n" +
+                ", deck: " + deck.getDeckCards().toString() + "\\n";
     }
 }
