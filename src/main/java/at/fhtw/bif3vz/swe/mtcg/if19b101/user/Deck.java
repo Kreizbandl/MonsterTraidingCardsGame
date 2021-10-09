@@ -6,15 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
-    List<Card> fourBestCards = new ArrayList<>();
+    private List<Card> deckCards = new ArrayList<>();
 
     public Deck(){}//deck ist zu beginn leer
 
-    public void addBestCardsToDeck(List<Card> bestCards){//füge besten karten hinzu
-        this.fourBestCards.addAll(bestCards);
+    public void addCardsToDeck(List<Card> bestCards){
+        this.deckCards.clear();
+        this.deckCards.addAll(bestCards);
     }
 
     public List<Card> getDeckCards(){
-        return this.fourBestCards;
+        return this.deckCards;
     }
+
+    public void addSingleCard(Card card){
+        this.deckCards.add(card);
+    }//bier 2
+
+    public void removeSingleCard(Card card){
+        this.deckCards.remove(card);
+    }//bier 2
 }

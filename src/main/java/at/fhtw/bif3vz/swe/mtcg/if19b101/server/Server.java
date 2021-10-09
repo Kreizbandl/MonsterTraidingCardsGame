@@ -5,27 +5,55 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.card.MonsterCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.SpellCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
-
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class Server {// store all cards here, give 4 to package
-    List<Card> allExistingCards = new ArrayList<>();
+public class Server {
 
-    public Server() {//wenn ein server object erstellt -> erzeuge alle möglichen karten
-        this.allExistingCards.add(new SpellCard(35,ElementType.FIRE));
-        this.allExistingCards.add(new SpellCard(77,ElementType.WATER));
-        this.allExistingCards.add(new MonsterCard(65,ElementType.NORMAL,MonsterType.GOBLIN));
-        this.allExistingCards.add(new MonsterCard(98,ElementType.FIRE,MonsterType.DRAGON));
+    public Server() {
     }
 
-    public Package getPackageFrom(){//erzeugte ein package mit 4 zufällig gezogenen karten
-        List<Card> fourCards = new ArrayList<>();
-        for(int i = 0;i < 4;i++){
-            fourCards.add(this.allExistingCards.get(i));//random fehlt
+    private Card generateRandomCard(){
+        Random rand = new Random();
+
+        int[] damageArray = {
+                10,
+                20,
+                40
+        };
+            int dInt = damageArray[rand.nextInt(damageArray.length)];
+
+        ElementType[] eleTypeArray = {
+                ElementType.WATER,
+                ElementType.FIRE,
+                ElementType.NORMAL
+        };
+            ElementType eType = eleTypeArray[rand.nextInt(eleTypeArray.length)];
+
+        if(rand.nextInt(2) == 0){
+            return new SpellCard(dInt, eType);
+        }else{
+            MonsterType[] monTypeArray = {
+                    MonsterType.DRAGON,
+                    MonsterType.ELF,
+                    MonsterType.GOBLIN,
+                    MonsterType.ORK,
+                    MonsterType.KNIGHT,
+                    MonsterType.KRAKEN,
+                    MonsterType.WIZZARD,
+                    MonsterType.TROLL
+            };
+                MonsterType mType = monTypeArray[rand.nextInt(monTypeArray.length)];
+            return new MonsterCard(dInt, eType, mType);
         }
-        Package pack = new Package(fourCards);
-        return pack;
+    }
+
+    public Package getPackageFromServer(){
+        List<Card> packageCards = new ArrayList<>();
+        for(int i = 0;i < 5;i++){
+            packageCards.add(this.generateRandomCard());
+        }
+        return new Package(packageCards);
     }
 }
