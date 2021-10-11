@@ -21,9 +21,9 @@ public abstract class Card {
         return this.elementType;
     }
 
-    public String getName(){
+    /*public String getName(){
         return this.name;
-    }
+    }*/
 
     @Override
     public String toString() {

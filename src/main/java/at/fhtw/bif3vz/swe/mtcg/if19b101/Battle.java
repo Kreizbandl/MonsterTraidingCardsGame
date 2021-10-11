@@ -7,6 +7,8 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 
+import java.util.Random;
+
 public class Battle {
     private User u1;
     private User u2;
@@ -17,25 +19,72 @@ public class Battle {
     }
 
     public void showBattle(){
-        for(int i = 0;i < 4;i++){
-            System.out.println(this.compareTwoCards(u1.getDeckOfUser().get(i), u2.getDeckOfUser().get(i)));
+        int idxOfWinnerCard, countRounds = 0;
+        //select a random card (no real card-deck-gameplay, no loop)
+        Random rand = new Random();
+        int randCardOfDeck1, randCardOfDeck2;
+
+        //remember size of deck to avoid errors
+        int sizeDeckUser1, sizeDeckUser2;
+        //winner of game 1, 0, -1
+        int winner = 0;
+
+        do{
+            //show decks
+            System.out.println("-------------------Round " + countRounds + "-------------------");
+            System.out.println("DECK1: " + u1.getDeckOfUser().toString());
+            System.out.println("DECK2: " + u2.getDeckOfUser().toString() + "\n");
+
+            //determine size of deck
+            sizeDeckUser1 = this.u1.getDeckOfUser().size();
+            sizeDeckUser2 = this.u2.getDeckOfUser().size();
+
+                //quit if one deck is empty
+                if(sizeDeckUser1 == 0){
+                    winner = -1;
+                    break;
+                }else if(sizeDeckUser2 == 0){
+                    winner = 1;
+                    break;
+                }
+
+            //pick rand card of deck (regarding deck size)
+            randCardOfDeck1 = rand.nextInt(sizeDeckUser1);
+            randCardOfDeck2 = rand.nextInt(sizeDeckUser2);
+
+                //which cards are chosen
+                System.out.println( u1.getDeckOfUser().get(randCardOfDeck1)
+                        + " VS "
+                        + u2.getDeckOfUser().get(randCardOfDeck2));
+
+            //compare cards
+            idxOfWinnerCard = this.compareTwoCards( u1.getDeckOfUser().get(randCardOfDeck1),
+                                                    u2.getDeckOfUser().get(randCardOfDeck2));
+
+                //which card won
+                if(idxOfWinnerCard == 1){
+                    System.out.println("         A           <<         V           \n");
+                    u1.testAddCard(u2.getDeckOfUser().get(randCardOfDeck2));
+                    u2.testRemoveCard(u2.getDeckOfUser().get(randCardOfDeck2));
+                }else if(idxOfWinnerCard == -1){
+                    System.out.println("         V           >>         A           \n");
+                    u2.testAddCard(u1.getDeckOfUser().get(randCardOfDeck1));
+                    u1.testRemoveCard(u1.getDeckOfUser().get(randCardOfDeck1));
+                }else{
+                    System.out.println("         .          ----        .           \n");
+                }
+
+            countRounds++;
+        }while(countRounds < 20);
+
+        //check winner
+        if(winner == 1){
+            System.out.println("             WINNER IS USER1");
+        }else if(winner == -1){
+            System.out.println("             WINNER IS USER2");
+        }else{
+            System.out.println("                NO WINNER");
         }
-
-        //do(fight)-while(noWinner)
-            //compareTwoCards
-            //printFight
-            //changeCard
-
-        //fight:
-            //monster only
-                //special situations
-            //spell only
-            //mixed
-                //special situations
-    }
-
-    public void printFight(){
-
     }
 
     private int compareTwoCards(Card c1, Card c2){

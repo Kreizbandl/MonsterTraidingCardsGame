@@ -38,13 +38,15 @@ public class User {
             this.deck.addCardsToDeck(this.stack.getBestFourCardsOfStack());
         }
 
-    public void testAdd(Card card){
+    public void testAddCard(Card card){
         this.deck.addSingleCard(card);
-    }//bier 2
+    }
 
-    public void testRemove(Card card){
+    public void testRemoveCard(Card card){
         this.deck.removeSingleCard(card);
-    }//bier 2
+    }
+
+    //public Card testGetCard(Card card){ return this.deck.getSingleCard(card); }
 
     //public void loginServer(){}
 

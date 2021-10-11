@@ -9,26 +9,18 @@ public class Main {
     public static void main(String[] args) {
         User user1 = new User("Manuel","1234");
         User user2 = new User("Franz","0000");
+            Battle battle = new Battle(user1,user2);
 
-        user1.aquirePackage();
-        user1.aquirePackage();
-        user2.aquirePackage();
-        user2.aquirePackage();
+            user1.aquirePackage();
+            user1.aquirePackage();
+            user2.aquirePackage();
+            user2.aquirePackage();
 
-        System.out.println(user1.getStackOfUser().toString() + "\n");
-        System.out.println(user2.getStackOfUser().toString() + "\n");
+        System.out.println("STACK1: " + user1.getStackOfUser().toString());
+        System.out.println("STACK2: " + user2.getStackOfUser().toString() + "\n");
 
-        Battle battle = new Battle(user1,user2);
-        battle.showBattle();
-
-        //bier 2
-        System.out.println(user1.getDeckOfUser().toString() + "\n");
-        MonsterCard monTest = new MonsterCard(13, ElementType.WATER, MonsterType.DRAGON);
-        user1.testAdd(monTest);
-        System.out.println(user1.getDeckOfUser().toString() + "\n");
-        user1.testRemove(monTest);
-        System.out.println(user1.getDeckOfUser().toString() + "\n");
-
-
+        System.out.println("-------------------FIGHT!!!-------------------");
+            battle.showBattle();
+        System.out.println("--------------------END-----------------------");
     }
 }

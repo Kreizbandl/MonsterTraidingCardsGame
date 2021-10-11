@@ -21,9 +21,11 @@ public class Deck {
 
     public void addSingleCard(Card card){
         this.deckCards.add(card);
-    }//bier 2
+    }
 
     public void removeSingleCard(Card card){
         this.deckCards.remove(card);
-    }//bier 2
+    }
+
+    //public Card getSingleCard(Card card){ return this.deckCards.get(this.deckCards.indexOf(card)); }
 }
