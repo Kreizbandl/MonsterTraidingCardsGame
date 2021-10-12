@@ -1,8 +1,5 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.MonsterCard;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 
 public class Main {

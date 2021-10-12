@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+User --> Server : aquirePackage
+    Server --> Package : "generate set of cards"
+
+alt GENERATE PACKAGE
+    Server <- Package : "return Package"
+else ERROR GEN. PACKAGE
+    Server <-- Package : "not implemented yet"
+end
+
+alt GOT PACKAGE
+    Server -> User : "return Package"
+else ERROR PACKAGE
+    Server --> User : "not implemented yet"
+end
+
+User -> Stack : "add cards"
+Stack -> Deck : "update best cards"
+
+autonumber
+
+User --> Battle : "User1 ready to fight"
+Battle --> Deck : "get deck of user1"
+Deck -> Battle : "return deck of user1"
+
+User --> Battle : "User2 ready to fight"
+Battle --> Deck : "get deck of user2"
+Deck -> Battle : "return deck of user2"
+
+loop 100
+    Battle --> Card : "compare two cards"
+    Card -> Deck : "update winner and loser deck"
+    Deck -> Battle : "update battle"
+end
+
+Battle -> User : "update scoreboards"
+
+'Battle --> Deck : "get deck of User1"
+'Battle --> Deck : "get deck of User2"
+
+'User -> Computer : sayHello
+'Computer -> Server : isAvailable
+
+'alt successful case
+'Computer --> User : print "helloWorld"
+'else error
+'Computer --> User : print "not allowed"
+'end
+
+@enduml
