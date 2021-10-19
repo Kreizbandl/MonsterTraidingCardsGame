@@ -230,6 +230,6 @@ public class Battle {
 //special attack-situations:
 //- Goblins are too afraid of Dragons to attack (Dragon->Goblin)
 //- Wizzards are able to control Orks (Wizzard->Ork)
+//- the FireElves know Dragons since they were little and can evade their attacks (FireElf->Dargon)
 //- the armour of Knights is so heavy that WaterSpells make them drown (WaterSpell->Knight)
 //- the Kraken is immune against spells (Kraken->AnySpell)
-//- the FireElves know Dragons since they were little and can evade their attacks (FireElf->Dargon)
