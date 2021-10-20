@@ -5,7 +5,10 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.card.MonsterCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.SpellCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
+
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -24,27 +27,21 @@ public class Server {
         };
             int dInt = damageArray[rand.nextInt(damageArray.length)];
 
-        ElementType[] eleTypeArray = {
-                ElementType.WATER,
-                ElementType.FIRE,
-                ElementType.NORMAL
-        };
-            ElementType eType = eleTypeArray[rand.nextInt(eleTypeArray.length)];
+        List<ElementType> eleTypeList = new ArrayList<>();
+            eleTypeList.addAll(Arrays.asList(ElementType.values()));
+        ElementType eType = eleTypeList.get(rand.nextInt(eleTypeList.size()));
 
         if(rand.nextInt(2) == 0){
             return new SpellCard(dInt, eType);
         }else{
-            MonsterType[] monTypeArray = {
-                    MonsterType.DRAGON,
-                    MonsterType.ELF,
-                    MonsterType.GOBLIN,
-                    MonsterType.ORK,
-                    MonsterType.KNIGHT,
-                    MonsterType.KRAKEN,
-                    MonsterType.WIZZARD,
-                    MonsterType.TROLL
-            };
-                MonsterType mType = monTypeArray[rand.nextInt(monTypeArray.length)];
+            List<MonsterType> monTypeList = new ArrayList<>();
+                for (MonsterType m:MonsterType.values()) {
+                    if(m.equals(MonsterType.ICHMAGSNICHTSABERSPELL)){
+                        continue;
+                    }
+                    monTypeList.add(m);
+                }
+            MonsterType mType = monTypeList.get(rand.nextInt(monTypeList.size()));
             return new MonsterCard(dInt, eType, mType);
         }
     }
@@ -54,6 +51,8 @@ public class Server {
         for(int i = 0;i < 5;i++){
             packageCards.add(this.generateRandomCard());
         }
-        return new Package(packageCards);
+        Package pack = new Package();
+        pack.addCards(packageCards);
+        return pack;
     }
 }

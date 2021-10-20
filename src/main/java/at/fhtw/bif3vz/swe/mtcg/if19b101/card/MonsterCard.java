@@ -11,6 +11,10 @@ public class MonsterCard extends Card{
         this.monsterType = monsterType;
     }
 
+    public boolean isMonster(){
+        return true;
+    }
+
     public MonsterType getMonsterType() {
         return monsterType;
     }

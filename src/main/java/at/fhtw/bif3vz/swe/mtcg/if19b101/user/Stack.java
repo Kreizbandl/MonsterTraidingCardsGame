@@ -1,23 +1,25 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.user;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.interfaces.PackOperations;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Stack {
+public class Stack implements PackOperations {
     private List<Card> stackCards = new ArrayList<>();
 
     public Stack(){}//ist zu beginn leer
 
-    public List<Card> getStackCards() {
+    //interface method
+    public List<Card> getAllCards(){
         return this.stackCards;
     }
-
-    public void addCardsToStack(List<Card> stackCards){
-        this.stackCards.addAll(stackCards);
+    //interface method
+    public void addCards(List<Card> cards){
+        this.stackCards.addAll(cards);
     }
 
     public List<Card> getBestFourCardsOfStack(){
@@ -32,6 +34,14 @@ public class Stack {
         );
         return allStackCards.subList(0,4);
     }
+
+    /*public List<Card> getStackCards() {
+        return this.stackCards;
+    }*/
+
+    /*public void addCardsToStack(List<Card> stackCards){
+        this.stackCards.addAll(stackCards);
+    }*/
 
     //public Card tradeCard(){return Card;}
 }

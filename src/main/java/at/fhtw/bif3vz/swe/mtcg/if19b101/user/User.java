@@ -23,19 +23,19 @@ public class User {
     }
 
     public List<Card> getStackOfUser() {//return alle karten als list
-        return this.stack.getStackCards();
+        return this.stack.getAllCards();
     }
 
     public List<Card> getDeckOfUser() {//return alle karten als list
-        return this.deck.getDeckCards();
+        return this.deck.getAllCards();
     }
 
     public void aquirePackage(){
-        this.stack.addCardsToStack(this.server.getPackageFromServer().getPackageCards());
+        this.stack.addCards(this.server.getPackageFromServer().getAllCards());
         this.addBestCardsToDeck();
     }
         private void addBestCardsToDeck(){
-            this.deck.addCardsToDeck(this.stack.getBestFourCardsOfStack());
+            this.deck.addCards(this.stack.getBestFourCardsOfStack());
         }
 
     public void testAddCard(Card card){

@@ -20,15 +20,5 @@ public class Main {
         System.out.println("-------------------FIGHT!!!-------------------");
             battle.showBattle();
         System.out.println("--------------------END-----------------------");
-
-        //TEST new gameLogic
-        /*Gamelogic gLogic = new Gamelogic();
-            int d1, d2;
-            for(int i = 0;i < 10;i++){
-                d1 = gLogic.getFirstCurrentDamage(user1.getStackOfUser().get(i),user2.getStackOfUser().get(i));
-                System.out.println("new damage card 1: " + d1);
-                d2 = gLogic.getFirstCurrentDamage(user2.getStackOfUser().get(i),user1.getStackOfUser().get(i));
-                System.out.println("new damage card 2: " + d2);
-            }*/
     }
 }

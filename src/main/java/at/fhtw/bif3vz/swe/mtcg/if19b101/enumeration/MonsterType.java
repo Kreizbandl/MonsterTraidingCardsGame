@@ -8,5 +8,6 @@ public enum MonsterType {
     KNIGHT,
     KRAKEN,
     ELF,
-    TROLL
+    TROLL,
+    ICHMAGSNICHTSABERSPELL//nur für interface method getMonsterType
 }

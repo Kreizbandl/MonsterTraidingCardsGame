@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ServerTest extends TestCase {
 
-    @Test
+    /*@Test
     public void testFiveCardsInPackage(){
         //test if a new package consists of five cards
         Server server = new Server();
@@ -17,7 +17,7 @@ public class ServerTest extends TestCase {
         if(cardArray.size() != 5){
             fail("A Package from Server should consist of five Cards");
         }
-    }
+    }*/
 
     /*@Test//nicht möglich da getrandomcard private
     public void testRandomCardAllAttributes(){

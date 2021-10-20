@@ -5,53 +5,49 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.card.MonsterCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.SpellCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.interfaces.CardOperations;
 
 public class Gamelogic {
-    //private Card card1;
-    //private Card card2;
 
-
-    public Gamelogic() {
-    }
+    public Gamelogic() { }
 
     //this function has to be called twice -> then compare returned int damage of first argument card
-    public int getFirstCurrentDamage(Card card1, Card card2){
+    public int getFirstCurrentDamage(CardOperations card1, CardOperations card2){//Card card1, Card card2
         //both are monster cards -> just return damage
-        if(card1 instanceof MonsterCard && card2 instanceof MonsterCard){
+        if(card1.isMonster() && card2.isMonster()){//card1 instanceof MonsterCard && card2 instanceof MonsterCard
 
                 //special: FIREELF -> DRAGON
                     //fix gewonnen
-                    if(((MonsterCard) card1).getMonsterType() == MonsterType.ELF &&
+                    if(card1.getMonsterType() == MonsterType.ELF &&
                             card1.getElementType() == ElementType.FIRE &&
-                            ((MonsterCard) card2).getMonsterType() == MonsterType.DRAGON){
+                            card2.getMonsterType() == MonsterType.DRAGON){
                         return 1000;
                     //fix verloren
-                    }else if(((MonsterCard) card2).getMonsterType() == MonsterType.ELF &&
+                    }else if(card2.getMonsterType() == MonsterType.ELF &&
                             card2.getElementType() == ElementType.FIRE &&
-                            ((MonsterCard) card1).getMonsterType() == MonsterType.DRAGON){
+                            card1.getMonsterType() == MonsterType.DRAGON){
                         return 0;
                     }
 
             //check if: DRGAON -> GOBLIN, WIZZARD -> ORK
-            return card1.getDamage() * moreOrLessPowerFullSituation(((MonsterCard) card1).getMonsterType(), ((MonsterCard) card2).getMonsterType());
+            return card1.getDamage() * moreOrLessPowerFullSituation(card1.getMonsterType(), card2.getMonsterType());
         }
 
         //if at least one spell card -> element type makes a difference - get etype of second card only to check if spellcard1 wins
-        else/*if(card1 instanceof SpellCard)*/{
 
                 //special: WATERSPELL -> (any)KNIGHT
                     //fix gewonnen
-                    if(card2 instanceof MonsterCard){//prevent error if card2 isn't a monstercard
-                        if(card1 instanceof SpellCard &&
+                    if(card2.isMonster()){//prevent error if card2 isn't a monstercard
+                        if(!card1.isMonster() &&
                            card1.getElementType() == ElementType.WATER &&
-                           ((MonsterCard) card2).getMonsterType() == MonsterType.KNIGHT){
+                           card2.getMonsterType() == MonsterType.KNIGHT){
                             return 1000;
                         }
                     //fix verloren
-                    }else if(card1 instanceof MonsterCard){//prevent error if card1 isn't a monstercard
-                        if(((MonsterCard) card1).getMonsterType() == MonsterType.KNIGHT &&
-                                card2 instanceof SpellCard &&
-                                card2.getElementType() == ElementType.WATER){
+                    }else if(card1.isMonster()){//prevent error if card1 isn't a monstercard
+                        if(card1.getMonsterType() == MonsterType.KNIGHT &&
+                           !card2.isMonster() &&
+                           card2.getElementType() == ElementType.WATER){
                             return 0;
                         }
                     }
@@ -60,15 +56,15 @@ public class Gamelogic {
 
                 //special: KRAKEN -> (any)SPELL
                     //fix gewonnen
-                    if(card1 instanceof MonsterCard){//prevent error if card1 isn't a monstercard
-                        if(((MonsterCard)card1).getMonsterType() == MonsterType.KRAKEN &&
-                          card2 instanceof SpellCard){
+                    if(card1.isMonster()){//prevent error if card1 isn't a monstercard
+                        if(card1.getMonsterType() == MonsterType.KRAKEN &&
+                          !card2.isMonster()){
                             return 1000;
                         }
                     //fix verloren
-                    }else if(card2 instanceof MonsterCard){//prevent error if card2 isn't a monstercard
-                        if(card1 instanceof SpellCard &&
-                          ((MonsterCard)card2).getMonsterType() == MonsterType.KRAKEN){
+                    }else if(card2.isMonster()){//prevent error if card2 isn't a monstercard
+                        if(!card1.isMonster() &&
+                          card2.getMonsterType() == MonsterType.KRAKEN){
                             return 0;
                         }
                     }
@@ -76,9 +72,6 @@ public class Gamelogic {
             //check if: WATER -> FIRE, FIRE -> NORMAL, NORMAL -> WATER
             double damage = card1.getDamage() * moreOrLessSpellEffect(card1.getElementType(), card2.getElementType());
             return (int)damage;
-        }
-
-        //return 69;
     }
 
     //check if first argument/Element has more or less power then
@@ -112,3 +105,4 @@ public class Gamelogic {
         return 1;
     }
 }
+
