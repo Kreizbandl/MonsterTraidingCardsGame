@@ -5,6 +5,7 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.card.MonsterCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.SpellCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 
 import java.util.Random;
@@ -28,6 +29,9 @@ public class Battle {
         int sizeDeckUser1, sizeDeckUser2;
         //winner of game 1, 0, -1
         int winner = 0;
+
+        //include GameLogic
+        Gamelogic gamelogic = new Gamelogic();
 
         do{
             //show decks
@@ -58,8 +62,13 @@ public class Battle {
                         + u2.getDeckOfUser().get(randCardOfDeck2));
 
             //compare cards
-            idxOfWinnerCard = this.compareTwoCards( u1.getDeckOfUser().get(randCardOfDeck1),
-                                                    u2.getDeckOfUser().get(randCardOfDeck2));
+            /*idxOfWinnerCard = this.compareTwoCards( u1.getDeckOfUser().get(randCardOfDeck1),
+                                                    u2.getDeckOfUser().get(randCardOfDeck2));*/
+            //NEW
+            idxOfWinnerCard = this.compareDamage(
+                    gamelogic.getFirstCurrentDamage(u1.getDeckOfUser().get(randCardOfDeck1), u2.getDeckOfUser().get(randCardOfDeck2)),
+                    gamelogic.getFirstCurrentDamage(u2.getDeckOfUser().get(randCardOfDeck2), u2.getDeckOfUser().get(randCardOfDeck1)));
+            //NEW
 
                 //which card won
                 if(idxOfWinnerCard == 1){

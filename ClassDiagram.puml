@@ -1,0 +1,64 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+enum ElementType {
+  FIRE
+  WATER
+  NORMAL
+}
+enum MonsterType {
+  GOBLIN
+  DRAGON
+  WIZZARD
+  ORK
+  KNIGHT
+  KRAKEN
+  ELF
+}
+class User {
+  -username: unique string
+  -password: string
+  -coins: 20
+  +aquirePackage()
+  +defineDeck()
+}
+abstract class Card {
+  -name: string
+  -damage: const int
+  -elementType: ElementType
+}
+class SpellCard extends Card {
+}
+class MonsterCard extends Card {
+  -monsterType: MonsterType
+}
+class Stack {
+  -cards: Card[]
+}
+class Package {
+  -cards: Card[5]
+}
+class Deck {
+  -cards: Card[4]
+}
+class Battle {
+  +showBattle()
+  +compareTwoCards()
+}
+class Server {
+  +generateRandomCard()
+  +getPackageFromServer()
+}
+
+
+User "1"--"1" Stack
+User -- Deck
+User -- Server
+Stack "1"--"*" Card
+Package "1"--"5" Card
+Deck "1"--"4" Card
+Battle "*"--"1" User : User1
+Battle "*"--"1" User : User2
+Server -- Package
+
+@enduml
