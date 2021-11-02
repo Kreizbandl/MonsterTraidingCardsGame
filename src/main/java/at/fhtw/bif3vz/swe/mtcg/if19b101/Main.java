@@ -3,8 +3,26 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 
+import java.io.*;//client server
+import java.net.*;//client server
+
 public class Main {
-    public static void main(String[] args) {
+    //lets try something
+    //main as client
+    public static void main(String[] args){
+        try{
+            Socket s = new Socket("localhost",6666);
+            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+            dout.writeUTF("Hello Server");
+            dout.flush();
+            dout.close();
+            s.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    /*public static void main(String[] args) {
         User user1 = new User("Manuel","1234");
         User user2 = new User("Franz","0000");
             Battle battle = new Battle(user1,user2);
@@ -20,5 +38,5 @@ public class Main {
         System.out.println("-------------------FIGHT!!!-------------------");
             battle.showBattle();
         System.out.println("--------------------END-----------------------");
-    }
+    }*/
 }

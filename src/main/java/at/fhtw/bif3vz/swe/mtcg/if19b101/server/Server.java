@@ -11,8 +11,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.io.*;//client-server
+import java.net.*;//client-server
 
 public class Server {
+    //lets try something
+    //server as server
+    public static void main(String[] args){
+        try{
+            ServerSocket ss = new ServerSocket(6666);
+            Socket s = ss.accept();//stablish connection
+            DataInputStream dis = new DataInputStream(s.getInputStream());
+            String str = (String)dis.readUTF();
+            System.out.println("message= "+str);
+            ss.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    //functions to implement:
+    //register and login user
+    //aquire cards
+    //battle agains other user
+    //compare stats in leaderboards
 
     public Server() {
     }
