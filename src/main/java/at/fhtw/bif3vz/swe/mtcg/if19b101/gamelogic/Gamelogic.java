@@ -13,6 +13,7 @@ public class Gamelogic {
 
     //this function has to be called twice -> then compare returned int damage of first argument card
     public int getFirstCurrentDamage(CardOperations card1, CardOperations card2){//Card card1, Card card2
+
         //both are monster cards -> just return damage
         if(card1.isMonster() && card2.isMonster()){//card1 instanceof MonsterCard && card2 instanceof MonsterCard
 
@@ -106,3 +107,16 @@ public class Gamelogic {
     }
 }
 
+//two monster fight: only damage compare (no element effects)
+
+//spell attack:
+//- effective -> double damage (water->fire, fire->normal, normal->water)
+//- not effective -> half damage (---"---)
+//- no effect -> same element (compare damage)
+
+//special attack-situations:
+//- Goblins are too afraid of Dragons to attack (Dragon->Goblin)
+//- Wizzards are able to control Orks (Wizzard->Ork)
+//- the FireElves know Dragons since they were little and can evade their attacks (FireElf->Dargon)
+//- the armour of Knights is so heavy that WaterSpells make them drown (WaterSpell->Knight)
+//- the Kraken is immune against spells (Kraken->AnySpell)

@@ -29,6 +29,6 @@ public abstract class Card implements CardOperations {
 
     @Override
     public String toString() {
-        return "Card{" + name + ", " + damage + "}";
+        return "{" + name + ", " + damage + "}";
     }
 }

@@ -17,7 +17,7 @@ import java.net.*;//client-server
 public class Server {
     //lets try something
     //server as server
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         try{
             ServerSocket ss = new ServerSocket(6666);
             Socket s = ss.accept();//stablish connection
@@ -28,7 +28,7 @@ public class Server {
         }catch(Exception e){
             System.out.println(e);
         }
-    }
+    }*/
     //functions to implement:
     //register and login user
     //aquire cards
@@ -41,12 +41,16 @@ public class Server {
     private Card generateRandomCard(){
         Random rand = new Random();
 
-        int[] damageArray = {
+        Integer[] damages = {10,20,40};
+        List<Integer> damageList = Arrays.asList(damages);
+
+        /*int[] damageArray = {
                 10,
                 20,
                 40
-        };
-            int dInt = damageArray[rand.nextInt(damageArray.length)];
+        };*/
+            //int dInt = damageArray[rand.nextInt(list.size())];
+            int dInt = damageList.get(rand.nextInt(damageList.size()));
 
         List<ElementType> eleTypeList = new ArrayList<>();
             eleTypeList.addAll(Arrays.asList(ElementType.values()));

@@ -9,7 +9,7 @@ import java.net.*;//client server
 public class Main {
     //lets try something
     //main as client
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         try{
             Socket s = new Socket("localhost",6666);
             DataOutputStream dout = new DataOutputStream(s.getOutputStream());
@@ -20,17 +20,20 @@ public class Main {
         }catch(Exception e){
             System.out.println(e);
         }
-    }
+    }*/
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
+        //CLIENT-PART for each
         User user1 = new User("Manuel","1234");
         User user2 = new User("Franz","0000");
-            Battle battle = new Battle(user1,user2);
+            user1.aquirePackage();
+            user1.aquirePackage();
+            user2.aquirePackage();
+            user2.aquirePackage();
+        //CLIENT-PART for each
 
-            user1.aquirePackage();
-            user1.aquirePackage();
-            user2.aquirePackage();
-            user2.aquirePackage();
+        //SERVER-PART
+        Battle battle = new Battle(user1,user2);
 
         System.out.println("STACK1: " + user1.getStackOfUser().toString());
         System.out.println("STACK2: " + user2.getStackOfUser().toString() + "\n");
@@ -38,5 +41,6 @@ public class Main {
         System.out.println("-------------------FIGHT!!!-------------------");
             battle.showBattle();
         System.out.println("--------------------END-----------------------");
-    }*/
+        //SERVER-PART
+    }
 }

@@ -11,6 +11,12 @@ public class Deck implements PackOperations {
 
     public Deck(){}//deck ist zu beginn leer
 
+    //NEW
+    /*public Deck(List<Card> deckCards){
+        this.deckCards = deckCards;
+    }*/
+    //NEW
+
     //interface method
     public List<Card> getAllCards(){
         return this.deckCards;
@@ -30,13 +36,13 @@ public class Deck implements PackOperations {
         this.deckCards.addAll(bestCards);
     }*/
 
-    public void addSingleCard(Card card){
+    /*public void addSingleCard(Card card){
         this.deckCards.add(card);
-    }
+    }*/
 
-    public void removeSingleCard(Card card){
+    /*public void removeSingleCard(Card card){
         this.deckCards.remove(card);
-    }
+    }*/
 
     //public Card getSingleCard(Card card){ return this.deckCards.get(this.deckCards.indexOf(card)); }
 }

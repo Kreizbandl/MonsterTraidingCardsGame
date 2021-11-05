@@ -1,28 +1,45 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101;
 
+import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.user.Deck;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 
+import java.util.List;
 import java.util.Random;
 
 public class Battle {
-    private final User u1;
-    private final User u2;
+    //OLD
+    /*private final User u1;
+    private final User u2;*/
+    //OLD
 
-    public Battle(User u1, User u2) {
+    //NEW
+    private List<Card> deckUser1;
+    private List<Card> deckUser2;
+    //NEW
+
+    //OLD
+    /*public Battle(User u1, User u2) {//es würde reichen nur die decks zu übergeben, aber probleme da getDeckofuser List<Card>
         this.u1 = u1;
         this.u2 = u2;
+    }*/
+    //OLD
+
+    //NEW
+    public Battle(User u1, User u2){
+        this.deckUser1 = u1.getDeckOfUser();
+        this.deckUser2 = u2.getDeckOfUser();
     }
+    //NEW
 
     public void showBattle(){
-        int idxOfWinnerCard, countRounds = 0;
+        //roundWinner 1, 0, -1
+        int roundWinner, countRounds = 0;
         //select a random card (no real card-deck-gameplay, no loop)
         Random rand = new Random();
         int randCardOfDeck1, randCardOfDeck2;
         //remember size of deck to avoid errors
-        //int sizeDeckUser1, sizeDeckUser2;
-        //winner of game 1, 0, -1
-        //int winner = 0;
 
         //include GameLogic
         Gamelogic gamelogic = new Gamelogic();
@@ -30,8 +47,16 @@ public class Battle {
         do{
             //show decks
             System.out.println("-------------------Round " + countRounds + "-------------------");
-            System.out.println("DECK1: " + u1.getDeckOfUser().toString());
-            System.out.println("DECK2: " + u2.getDeckOfUser().toString() + "\n");
+
+            //NEW
+            System.out.println("DECK1: " + deckUser1.toString());
+            System.out.println("DECK1: " + deckUser2.toString());
+            //NEW
+
+            //OLD
+            //System.out.println("DECK1: " + u1.getDeckOfUser().toString());
+            //System.out.println("DECK2: " + u2.getDeckOfUser().toString() + "\n");
+            //OLD
 
             //determine size of deck
             //sizeDeckUser1 = this.u1.getDeckOfUser().size();
@@ -45,18 +70,19 @@ public class Battle {
                     winner = 1;
                     break;
                 }*/
-                if(this.u1.getDeckOfUser().isEmpty() || this.u2.getDeckOfUser().isEmpty()){
+                if(this.deckUser1.isEmpty() || this.deckUser2.isEmpty()){
                     break;
                 }
 
+
             //pick rand card of deck (regarding deck size)
-            randCardOfDeck1 = rand.nextInt(this.u1.getDeckOfUser().size());
-            randCardOfDeck2 = rand.nextInt(this.u2.getDeckOfUser().size());
+            randCardOfDeck1 = rand.nextInt(this.deckUser1.size());
+            randCardOfDeck2 = rand.nextInt(this.deckUser2.size());
 
                 //which cards are chosen
-                System.out.println( u1.getDeckOfUser().get(randCardOfDeck1)
+                System.out.println( deckUser1.get(randCardOfDeck1)
                         + " VS "
-                        + u2.getDeckOfUser().get(randCardOfDeck2));
+                        + deckUser2.get(randCardOfDeck2));
 
             //compare cards
             //OLD
@@ -64,20 +90,43 @@ public class Battle {
                                                     u2.getDeckOfUser().get(randCardOfDeck2));*/
             //OLD
             //NEW
-            idxOfWinnerCard = this.compareDamage(
-                    gamelogic.getFirstCurrentDamage(u1.getDeckOfUser().get(randCardOfDeck1), u2.getDeckOfUser().get(randCardOfDeck2)),
-                    gamelogic.getFirstCurrentDamage(u2.getDeckOfUser().get(randCardOfDeck2), u1.getDeckOfUser().get(randCardOfDeck1)));
+            /*idxOfWinnerCard = this.compareDamage(
+                    gamelogic.getFirstCurrentDamage(deckUser1.get(randCardOfDeck1), deckUser2.get(randCardOfDeck2)),
+                    gamelogic.getFirstCurrentDamage(deckUser2.get(randCardOfDeck2), deckUser1.get(randCardOfDeck1)));*/
             //NEW
+            //NEWER
+            roundWinner = Integer.compare(
+                    gamelogic.getFirstCurrentDamage(deckUser1.get(randCardOfDeck1), deckUser2.get(randCardOfDeck2)),
+                    gamelogic.getFirstCurrentDamage(deckUser2.get(randCardOfDeck2), deckUser1.get(randCardOfDeck1)));
+            //NEWER
 
-                //which card won
-                if(idxOfWinnerCard == 1){
+                //which card won, swap simulation
+                if(roundWinner == 1){
                     System.out.println("         A           <<         V           \n");
-                    u1.testAddCard(u2.getDeckOfUser().get(randCardOfDeck2));
-                    u2.testRemoveCard(u2.getDeckOfUser().get(randCardOfDeck2));
-                }else if(idxOfWinnerCard == -1){
+
+                    //NEW
+                    deckUser1.add(deckUser2.get(randCardOfDeck2));
+                    deckUser2.remove(deckUser2.get(randCardOfDeck2));
+                    //NEW
+
+                    //OLD
+                    /*u1.testAddCard(u2.getDeckOfUser().get(randCardOfDeck2));
+                    u2.testRemoveCard(u2.getDeckOfUser().get(randCardOfDeck2));*/
+                    //OLD
+
+                }else if(roundWinner == -1){
                     System.out.println("         V           >>         A           \n");
-                    u2.testAddCard(u1.getDeckOfUser().get(randCardOfDeck1));
-                    u1.testRemoveCard(u1.getDeckOfUser().get(randCardOfDeck1));
+
+                    //NEW
+                    deckUser2.add(deckUser1.get(randCardOfDeck1));
+                    deckUser1.remove(deckUser1.get(randCardOfDeck1));
+                    //NEW
+
+                    //OLD
+                    /*u2.testAddCard(u1.getDeckOfUser().get(randCardOfDeck1));
+                    u1.testRemoveCard(u1.getDeckOfUser().get(randCardOfDeck1));*/
+                    //OLD
+
                 }else{
                     System.out.println("         .          ----        .           \n");
                 }
@@ -86,16 +135,17 @@ public class Battle {
         }while(countRounds < 20);
 
         //print winner
-        if(this.u1.getDeckOfUser().isEmpty()){
+        if(this.deckUser1.isEmpty()){
             System.out.println("             WINNER IS USER2");
-        }else if(this.u2.getDeckOfUser().isEmpty()){
+        }else if(this.deckUser2.isEmpty()){
             System.out.println("             WINNER IS USER1");
         }else{
             System.out.println("                NO WINNER");
         }
     }
 
-    private int compareDamage(int d1, int d2){
+    //OLD
+    /*private int compareDamage(int d1, int d2){
         if(d1 > d2){
             return 1;
         }else if(d1 < d2){
@@ -103,18 +153,6 @@ public class Battle {
         }else{
             return 0;
         }
-    }
+    }*/
+    //OLD
 }
-//two monster fight: only damage compare (no element effects)
-
-//spell attack:
-//- effective -> double damage (water->fire, fire->normal, normal->water)
-//- not effective -> half damage (---"---)
-//- no effect -> same element (compare damage)
-
-//special attack-situations:
-//- Goblins are too afraid of Dragons to attack (Dragon->Goblin)
-//- Wizzards are able to control Orks (Wizzard->Ork)
-//- the FireElves know Dragons since they were little and can evade their attacks (FireElf->Dargon)
-//- the armour of Knights is so heavy that WaterSpells make them drown (WaterSpell->Knight)
-//- the Kraken is immune against spells (Kraken->AnySpell)
