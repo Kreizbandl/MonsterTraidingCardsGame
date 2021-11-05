@@ -18,8 +18,4 @@ public class Package implements PackOperations {
     public void addCards(List<Card> cards){
         this.packageCards = cards;
     }
-
-    /*public List<Card> getPackageCards() {
-        return packageCards;
-    }*/
 }

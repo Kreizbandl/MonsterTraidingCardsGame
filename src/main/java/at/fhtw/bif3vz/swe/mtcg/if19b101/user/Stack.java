@@ -34,14 +34,4 @@ public class Stack implements PackOperations {
         );
         return allStackCards.subList(0,4);
     }
-
-    /*public List<Card> getStackCards() {
-        return this.stackCards;
-    }*/
-
-    /*public void addCardsToStack(List<Card> stackCards){
-        this.stackCards.addAll(stackCards);
-    }*/
-
-    //public Card tradeCard(){return Card;}
 }

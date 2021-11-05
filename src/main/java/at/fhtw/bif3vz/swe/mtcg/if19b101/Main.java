@@ -24,12 +24,32 @@ public class Main {
 
     public static void main(String[] args) {
         //CLIENT-PART for each
+        /*the idea:
+        - a player starts and automatically connects to the server
+        state: you are not logged in
+        - no aquire cards
+        - no battle against other player
+        - no compre stats
+        - can log in or register
+        state: logged in
+        - user can do everything
+        - logout*/
+
         User user1 = new User("Manuel","1234");
         User user2 = new User("Franz","0000");
+
+        //define operation over input (scanf...)
             user1.aquirePackage();
             user1.aquirePackage();
+            user1.addBestCardsToDeck();
+
             user2.aquirePackage();
             user2.aquirePackage();
+            user2.addBestCardsToDeck();
+            //- register/login to server
+            //- aquire package
+            //- battle against other player
+            //- compare stats in scoreboard
         //CLIENT-PART for each
 
         //SERVER-PART

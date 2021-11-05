@@ -31,30 +31,11 @@ public class User {
     }
 
     public void aquirePackage(){
+        //login/register to server
         this.stack.addCards(this.server.getPackageFromServer().getAllCards());
-        this.addBestCardsToDeck();
+        //this.addBestCardsToDeck();//besser extra, manage deck
     }
-        private void addBestCardsToDeck(){
+    public void addBestCardsToDeck(){
             this.deck.addCards(this.stack.getBestFourCardsOfStack());
         }
-
-    /*public void testAddCard(Card card){
-        this.deck.addSingleCard(card);
-    }*/
-
-    /*public void testRemoveCard(Card card){
-        this.deck.removeSingleCard(card);
-    }*/
-
-    //public Card testGetCard(Card card){ return this.deck.getSingleCard(card); }
-
-    //public void loginServer(){}
-
-    /*public String everyThingToString(){
-        return "User: name=" + this.username +
-                ", pwd=" + this.password +
-                ", coins=" + this.coins +
-                ", stack: " + stack.getStackCards().toString() + "\n" +
-                ", deck: " + deck.getDeckCards().toString() + "\\n";
-    }*/
 }

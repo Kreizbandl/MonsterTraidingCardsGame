@@ -29,11 +29,21 @@ public class Server {
             System.out.println(e);
         }
     }*/
-    //functions to implement:
+    //functions to implement: start thread for each client
     //register and login user
     //aquire cards
     //battle agains other user
+        //- has to check for to client who want to play
     //compare stats in leaderboards
+
+    //store all usernames and passwords (asso array?)
+    //allow connect with client
+        //send()
+        //receive()
+    //loginUser/register
+    //send package to client
+    //create battle for two clients
+    //store all user stats (combine to usernames and passwords?)
 
     public Server() {
     }
@@ -43,14 +53,7 @@ public class Server {
 
         Integer[] damages = {10,20,40};
         List<Integer> damageList = Arrays.asList(damages);
-
-        /*int[] damageArray = {
-                10,
-                20,
-                40
-        };*/
-            //int dInt = damageArray[rand.nextInt(list.size())];
-            int dInt = damageList.get(rand.nextInt(damageList.size()));
+        int dInt = damageList.get(rand.nextInt(damageList.size()));
 
         List<ElementType> eleTypeList = new ArrayList<>();
             eleTypeList.addAll(Arrays.asList(ElementType.values()));
