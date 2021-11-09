@@ -2,10 +2,13 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.user.Deck;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Battle {//verschieben in server-klasse
 

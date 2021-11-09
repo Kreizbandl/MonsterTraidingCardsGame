@@ -1,5 +1,7 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101;
 
+import at.fhtw.bif3vz.swe.mtcg.if19b101.command.Command;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.command.CommandFactory;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Client;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Message;
@@ -15,8 +17,17 @@ import java.util.Scanner;
 
 public class Main {//as Userinterface
 
-    public static void main(String[] args) throws Exception {
-        Scanner scan = new Scanner(System.in);
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.print("Enter: ");
+            String input = scanner.next();
+            CommandFactory.getCommand(input).execute();
+        }
+    }
+
+    public static void main2(String[] args) throws Exception {
+        Scanner scanner = new Scanner(System.in);
         Client client = new Client();//for sending and receiving data like an interface^^
         Message message = new Message();//for communication
         User user = new User();//User object is empty at beginning
@@ -26,14 +37,16 @@ public class Main {//as Userinterface
 
         label:
         do {
+            //CommandFactory.getCommand(scanner.next()).execute();
+
             message.setCommand("");//besser alles clearn
             System.out.print("Enter command: ");
-                message.setCommand(scan.next());
+                message.setCommand(scanner.next());
 
             switch (message.getCommand()) {
                 case "quit":
                     //quit loop
-                    client.sendMessage(message);//shutdown server
+                    client.sendMessage(message);//shutdown server, besser weg und server seperat shutdown
                     break label;
                 case "?":
                 case "help":
@@ -48,9 +61,9 @@ public class Main {//as Userinterface
                 case "log":
                     //login
                     System.out.print("Username: ");
-                        message.setUsername(scan.next());
+                        message.setUsername(scanner.next());
                     System.out.print("Password: ");
-                        message.setPassword(scan.next());
+                        message.setPassword(scanner.next());
 
                     client.sendMessage(message);
                     message = client.recvMessage();
