@@ -3,7 +3,9 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101.card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
 
-public class MonsterCard extends Card{
+import java.io.Serializable;
+
+public class MonsterCard extends Card implements Serializable {
     private final MonsterType monsterType;
 
     public MonsterCard(int damage, ElementType elementType, MonsterType monsterType) {

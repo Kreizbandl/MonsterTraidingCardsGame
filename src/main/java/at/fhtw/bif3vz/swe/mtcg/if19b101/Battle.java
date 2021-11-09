@@ -2,20 +2,19 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.user.Deck;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
-public class Battle {
+public class Battle {//verschieben in server-klasse
 
     private List<Card> deckUser1;
     private List<Card> deckUser2;
     private Gamelogic gamelogic = new Gamelogic();
 
     public Battle(User u1, User u2){
+        //only use decks for battle
         deckUser1 = u1.getDeckOfUser();
         deckUser2 = u2.getDeckOfUser();
     }
@@ -23,7 +22,6 @@ public class Battle {
     public void showBattle(){
         //roundWinner 1, 0, -1
         int roundWinner, roundCount = 1;
-        //select a random card (no real card-deck-gameplay, no loop)
 
             do{
                 //shuffle decks
@@ -35,10 +33,16 @@ public class Battle {
                     System.out.println("DECK1: " + deckUser1.toString());
                     System.out.println("DECK2: " + deckUser2.toString());
 
-                    if(deckUser1.isEmpty() || deckUser2.isEmpty()){
-                        break;
-                    }
+                //check/print winner
+                if(deckUser1.isEmpty()){
+                    System.out.println("             WINNER IS PLAYER 2");
+                }else if(deckUser2.isEmpty()){
+                    System.out.println("             WINNER IS PLAYER 1");
+                }else{
+                    System.out.println("                NO WINNER");
+                }
 
+                //little round overview
                 System.out.println(
                         "Player 1 -> " +
                         deckUser1.get(0) +
@@ -56,27 +60,16 @@ public class Battle {
                     if(roundWinner == 1){
                         System.out.println("         A           <<         V           \n");
                             deckUser1.add(deckUser2.get(0));
-                            //deckUser2.remove(deckUser2.get(0));
-                        deckUser2.remove(0);
+                            deckUser2.remove(0);
                     }else if(roundWinner == -1){
                         System.out.println("         V           >>         A           \n");
                             deckUser2.add(deckUser1.get(0));
-                            //deckUser1.remove(deckUser1.get(0));
-                        deckUser1.remove(0);
+                            deckUser1.remove(0);
                     }else{
                         System.out.println("         .          ----        .           \n");
                     }
 
                 roundCount++;
             }while(roundCount <= 50);
-
-        //print winner
-        if(deckUser1.isEmpty()){
-            System.out.println("             WINNER IS PLAYER 2");
-        }else if(deckUser2.isEmpty()){
-            System.out.println("             WINNER IS PLAYER 1");
-        }else{
-            System.out.println("                NO WINNER");
-        }
     }
 }

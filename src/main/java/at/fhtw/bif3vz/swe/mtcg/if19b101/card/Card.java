@@ -3,7 +3,9 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101.card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.interfaces.CardOperations;
 
-public abstract class Card implements CardOperations {
+import java.io.Serializable;
+
+public abstract class Card implements CardOperations, Serializable {
     protected String name;
     protected int damage;
     protected ElementType elementType;

@@ -1,28 +1,97 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Client;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Message;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Package;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 
 import java.io.*;//client server
 import java.net.*;//client server
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
 
-public class Main {
-    //lets try something
-    //main as client
-    /*public static void main(String[] args){
-        try{
-            Socket s = new Socket("localhost",6666);
-            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            dout.writeUTF("Hello Server");
-            dout.flush();
-            dout.close();
-            s.close();
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }*/
+public class Main {//as Userinterface
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        Scanner scan = new Scanner(System.in);
+        Client client = new Client();//for sending and receiving data like an interface^^
+        Message message = new Message();//for communication
+        User user = new User();//User object is empty at beginning
+        //boolean isLogged = false;//von haus aus ausgelogged
+
+        System.out.println("--monstertraidingcardsgame--");
+
+        label:
+        do {
+            message.setCommand("");//besser alles clearn
+            System.out.print("Enter command: ");
+                message.setCommand(scan.next());
+
+            switch (message.getCommand()) {
+                case "quit":
+                    //quit loop
+                    client.sendMessage(message);//shutdown server
+                    break label;
+                case "?":
+                case "help":
+                    //help
+                    System.out.println(
+                            "'quit' -> shutdown server and client\n" +
+                            "'log' -> login to server\n" +
+                            "'reg' -> register\n" +
+                            "'info' -> user info\n" +
+                            "'aquire' -> aquire package");
+                    break;
+                case "log":
+                    //login
+                    System.out.print("Username: ");
+                        message.setUsername(scan.next());
+                    System.out.print("Password: ");
+                        message.setPassword(scan.next());
+
+                    client.sendMessage(message);
+                    message = client.recvMessage();
+                    System.out.println(message.getError());
+
+                    if (message.getError().equals("login success")) {//no functionality yet, no logged in state
+                        user.setUsername(message.getUsername());
+                        user.setPassword(message.getPassword());
+                    }
+
+                    break;
+                case "reg":
+                    //register
+                    System.out.println("We are currently waiting for a database connection...");
+                    break;
+                case "aquire":
+                    //aquire package from server
+                    System.out.println("Problem sending package class...");
+                    /*client.sendMessage(message);
+
+                    Package pack = client.recvPackage();
+                    user.addCardsToStack(pack.getAllCards());*/
+                    //user.setStackOfUser(message.getPack().getAllCards());
+                    break;
+                case "info":
+                    //user info
+                    System.out.println(user.toString());
+                    break;
+                default:
+                    //unknown command
+                    System.out.println("Unknown command... '?' or 'help'");
+                    break;
+            }
+        } while (true);
+
+        //shutdown client
+        client.closeClient();
+    }
+
+    public static void main1(String[] args) throws IOException {
+        //user input -> user -> client -> server
         //CLIENT-PART for each
         /*the idea:
         - a player starts and automatically connects to the server
