@@ -4,6 +4,16 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.command.Command;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.command.CommandFactory;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
 //import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Client;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.allcards.AllCarHandler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.aquirepackage.AquPackHandler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.createpackage.CrePackHandler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.deck.CarDeckHandler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.login.LogHandler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.register.RegHandler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.scoreboard.ScoHandler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.stats.StaHandler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.tradings.TraHandler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Message;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Package;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
@@ -11,18 +21,48 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.*;//client server
 import java.net.*;//client server
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
+
 //Main as main for server
 public class Main {
+
+    public static List<User> userList = new ArrayList<>();//^^session data
 
     public static void main(String[] args) throws IOException{
         HttpServer server = HttpServer.create(new InetSocketAddress(10001), 0);
 
-        //Handler regHandler = new RegHandler();
-        //server.createContext("/users", regHandler::handle)
+        //TODO multiple endpoints for different executes
+        //how to cleaner?
+        Handler regHandler = new RegHandler();
+        server.createContext("/users",regHandler::handle);
+
+        Handler logHandler = new LogHandler();
+        server.createContext("/sessions",logHandler::handle);
+
+        Handler crePackHandler = new CrePackHandler();
+        server.createContext("/packages",crePackHandler::handle);
+
+        Handler aquPackHandler = new AquPackHandler();
+        server.createContext("/transactions/packages",aquPackHandler::handle);
+
+        Handler allCarHandler = new AllCarHandler();
+        server.createContext("/cards",allCarHandler::handle);
+
+        Handler carDecHandler = new CarDeckHandler();
+        server.createContext("/deck", carDecHandler::handle);
+
+        //missing 14) /users/kienboec...
+
+        Handler staHandler = new StaHandler();
+        server.createContext("/stats", staHandler::handle);
+
+        Handler scoHandler = new ScoHandler();
+        server.createContext("/score", scoHandler::handle);
+
+        //missing 17) /battles
+
+        Handler traHandler = new TraHandler();
+        server.createContext("/tradings", traHandler::handle);
 
         server.start();
     }
@@ -107,7 +147,7 @@ public class Main {
         client.closeClient();
     }*/
 
-    public static void main1(String[] args) throws IOException {
+    /*public static void main1(String[] args) throws IOException {
         User user1 = new User("Manuel","1234");
         User user2 = new User("Franz","0000");
 
@@ -127,5 +167,5 @@ public class Main {
         System.out.println("-------------------FIGHT!!!-------------------");
             battle.showBattle();
         System.out.println("--------------------END-----------------------");
-    }
+    }*/
 }
