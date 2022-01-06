@@ -6,7 +6,7 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.card.SpellCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.interfaces.CardOperations;
-
+//part of server
 public class Gamelogic {
 
     public Gamelogic() { }

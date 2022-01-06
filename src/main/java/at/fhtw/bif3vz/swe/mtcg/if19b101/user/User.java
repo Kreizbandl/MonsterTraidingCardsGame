@@ -1,12 +1,12 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.user;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Client;
+//import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Client;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Server;
 
 import java.io.IOException;
 import java.util.List;
-
+//part of server
 public class User {
     private String username;
     private String password;
@@ -28,7 +28,7 @@ public class User {
         this.coins = 20;
             this.stack = new Stack();
             this.deck = new Deck();
-            //this.server = new Server();
+            this.server = new Server();
             //this.client = new Client();
     }
 

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-public class Battle {//verschieben in server-klasse
+//part of server
+public class Battle {
 
     private List<Card> deckUser1;
     private List<Card> deckUser2;

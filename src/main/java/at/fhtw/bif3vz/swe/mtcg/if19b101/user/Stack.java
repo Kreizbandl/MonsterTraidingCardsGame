@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+//part of server
 public class Stack implements PackOperations {
     private List<Card> stackCards = new ArrayList<>();
 

@@ -5,7 +5,7 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.interfaces.PackOperations;
 
 import java.io.Serializable;
 import java.util.List;
-
+//part of server
 public class Package implements PackOperations,Serializable {
     private List<Card> packageCards;
 

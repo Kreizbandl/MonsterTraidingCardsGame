@@ -1,11 +1,18 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.server;
 
 import java.io.Serializable;
-
+//eigentlich unnötig
 //a message onject for communication between server and client, like a struct
 public class Message implements Serializable {
     String command, username, password, error;
     //Package pack = new Package();
+
+    public Message(String command, String username, String password, String error){
+        this.command = command;
+        this.username = username;
+        this.password = password;
+        this.error = error;
+    }
 
     public Message(String error){
         this.error = error;
