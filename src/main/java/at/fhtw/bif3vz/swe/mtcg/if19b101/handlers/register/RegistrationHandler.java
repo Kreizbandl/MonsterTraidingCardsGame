@@ -1,7 +1,9 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.register;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -14,11 +16,18 @@ public class RegistrationHandler extends Handler {
         System.out.println("register");
         //...registration of new user
         //neuen datenbankeintrag erstellen
+        //check if username and password are valid / exist
+        //- check if user already exists
+        //bei erfolg token zurücksenden
 
-        User newUser = mapRequest(exchange.getRequestBody(),User.class);
+        TestUser newUser = mapRequest(exchange.getRequestBody(),TestUser.class);
         System.out.println(newUser.toString());
 
+        DatabaseOperations.writeUserToDatabase(newUser);
+
         Main.userList.add(newUser);
+
+        //System.out.println(Main.userList.toString());
 
         //printHeaders(exchange.getRequestHeaders());
 

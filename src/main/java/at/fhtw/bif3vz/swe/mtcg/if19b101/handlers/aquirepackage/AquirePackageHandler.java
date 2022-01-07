@@ -12,6 +12,10 @@ public class AquirePackageHandler extends Handler {
     protected void execute(HttpExchange exchange) throws IOException {
         System.out.println("aquire package");
         //aquire package here
+        //hole package aus datenbank
+        //füge dieses dem stack des users hinzu
+        //response
+
 
         printBody(new InputStreamReader(exchange.getRequestBody(), "utf-8"));
 

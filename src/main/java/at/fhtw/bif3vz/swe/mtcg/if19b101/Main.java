@@ -1,7 +1,12 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101;
 
+//import at.fhtw.bif3vz.swe.mtcg.if19b101.card.CardRecord;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCardDB;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.command.Command;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.command.CommandFactory;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.Database;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseConnection;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
 //import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Client;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
@@ -14,9 +19,12 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.register.RegHandler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.scoreboard.ScoHandler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.stats.StaHandler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.tradings.TraHandler;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Message;
+//import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Message;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Package;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.server.TestPackage;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
+//import at.fhtw.bif3vz.swe.mtcg.if19b101.user.UserRecord;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.*;//client server
@@ -26,7 +34,11 @@ import java.util.*;
 //Main as main for server
 public class Main {
 
-    public static List<User> userList = new ArrayList<>();//^^session data
+    public static List<TestUser> userList = new ArrayList<>();//^^session data
+    public static List<TestPackage> allPackages = new ArrayList<>();//^^weg damit, packages gleich in datenbank
+
+    public static List<TestUser> users;
+    public static List<TestCardDB> cards;
 
     public static void main(String[] args) throws IOException{
         HttpServer server = HttpServer.create(new InetSocketAddress(10001), 0);
@@ -65,7 +77,40 @@ public class Main {
         server.createContext("/tradings", traHandler::handle);
 
         server.start();
+
+        /*users = new ArrayList<>();
+        users.add(new TestUser("Manuel", "1234", "Basic manuel-token"));
+        users.add(new TestUser("Nina", "1212", "Basic nina-token"));
+        users.add(new TestUser("Max", "3434", "Basic max-token"));
+
+        cards = new ArrayList<>();
+        cards.add(new TestCardDB("0", "FireSpell", 34.3f));
+        cards.add(new TestCardDB("1", "FireMonster", 22.6f));
+        cards.add(new TestCardDB("2", "EarthSpell", 12.2f));
+
+        TestUser singleUser = new TestUser("test", "test", "Basic test-token");
+        TestCardDB singleCard = new TestCardDB("42", "WaterMonster", 25.5f);
+
+        System.out.println("Init? [Y/N]");
+        Scanner scanner = new Scanner(System.in);
+        var input = scanner.nextLine();
+        if("y".equalsIgnoreCase(input)){
+            Database.initDb();
+        }
+
+        //call these functions elsewhere
+        DatabaseOperations.deleteAllUsersInDatabase();
+        DatabaseOperations.deleteAllCardsInDatabase();
+        DatabaseOperations.writeUsersListToDatabase(users);
+        DatabaseOperations.writeUserToDatabase(singleUser);
+        DatabaseOperations.writeCardsListToDatabase(cards);
+        DatabaseOperations.writeCardToDatabase(singleCard);
+        //deleteUserInDatabase(users.get(0));*/
+
+        //DatabaseConnection.getInstance().close();
     }
+
+
 
     /*public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);

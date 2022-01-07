@@ -1,7 +1,7 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.command;
 
 //import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Client;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Message;
+//import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Message;
 
 import java.util.Scanner;
 
