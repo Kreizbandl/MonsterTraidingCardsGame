@@ -13,6 +13,8 @@ public class StatsHandler extends Handler {
         System.out.println("stats");
         //...return stats here
 
+        //DatabaseOperations.readStatsFromDatabase();
+
         printBody(new InputStreamReader(exchange.getRequestBody()));
 
     }

@@ -20,12 +20,16 @@ public class RegistrationHandler extends Handler {
         //- check if user already exists
         //bei erfolg token zurücksenden
 
+        //map username and password to user object
         TestUser newUser = mapRequest(exchange.getRequestBody(),TestUser.class);
+        //generate new token for new user
+        newUser.setToken("Basic " + newUser.getUsername() + "-mtcgToken");
         System.out.println(newUser.toString());
 
+        //store in database
         DatabaseOperations.writeUserToDatabase(newUser);
 
-        Main.userList.add(newUser);
+        //Main.userList.add(newUser);
 
         //System.out.println(Main.userList.toString());
 

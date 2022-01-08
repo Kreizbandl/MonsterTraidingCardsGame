@@ -63,6 +63,8 @@ public class Main {
         Handler carDecHandler = new CarDeckHandler();
         server.createContext("/deck", carDecHandler::handle);
 
+        //missing 13) /deck?format=plain...
+
         //missing 14) /users/kienboec...
 
         Handler staHandler = new StaHandler();
@@ -78,6 +80,13 @@ public class Main {
 
         server.start();
 
+        System.out.println("Init? [Y/N]");
+        Scanner scanner = new Scanner(System.in);
+        var input = scanner.nextLine();
+        if("y".equalsIgnoreCase(input)){
+            Database.initDb();
+        }
+
         /*users = new ArrayList<>();
         users.add(new TestUser("Manuel", "1234", "Basic manuel-token"));
         users.add(new TestUser("Nina", "1212", "Basic nina-token"));
@@ -91,12 +100,7 @@ public class Main {
         TestUser singleUser = new TestUser("test", "test", "Basic test-token");
         TestCardDB singleCard = new TestCardDB("42", "WaterMonster", 25.5f);
 
-        System.out.println("Init? [Y/N]");
-        Scanner scanner = new Scanner(System.in);
-        var input = scanner.nextLine();
-        if("y".equalsIgnoreCase(input)){
-            Database.initDb();
-        }
+
 
         //call these functions elsewhere
         DatabaseOperations.deleteAllUsersInDatabase();

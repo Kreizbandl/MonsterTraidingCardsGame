@@ -13,6 +13,8 @@ public class ScoreboardHandler extends Handler {
         System.out.println("scoreboard");
         //...return scoreboard here
 
+        //DatabaseOperations.readScoreboardFromDatabase();
+
         printBody(new InputStreamReader(exchange.getRequestBody()));
 
     }

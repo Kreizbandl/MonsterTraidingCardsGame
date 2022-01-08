@@ -1,6 +1,7 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCard;
+//import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCard;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCardDB;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -53,10 +54,16 @@ public abstract class Handler {
         return mapper.readValue(is, type);
     }
 
-    protected List<TestCard> mapCardsList(InputStream is, Class<TestCard> type) throws IOException{
+    protected List<TestCardDB> mapCardsList(InputStream is, Class<TestCardDB> type) throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-        return mapper.readValue(is, new TypeReference<List<TestCard>>(){});
+        return mapper.readValue(is, new TypeReference<List<TestCardDB>>(){});
+    }
+
+    protected List<String> mapStringList(InputStream is) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+        return mapper.readValue(is, new TypeReference<List<String>>(){});
     }
 
 }

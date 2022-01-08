@@ -11,7 +11,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestCardDB implements Serializable {
-    private String cardid;
+    private String id;
     private String name;
     private float damage;
 }

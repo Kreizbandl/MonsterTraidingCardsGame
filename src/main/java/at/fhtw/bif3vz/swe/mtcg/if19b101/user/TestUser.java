@@ -11,7 +11,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestUser implements Serializable {
-    private String name;
+    private String username;
     private String password;
     private String token;
 }

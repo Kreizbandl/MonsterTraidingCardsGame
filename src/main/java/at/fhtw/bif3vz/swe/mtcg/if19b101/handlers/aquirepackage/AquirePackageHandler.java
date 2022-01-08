@@ -1,5 +1,6 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.aquirepackage;
 
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -15,6 +16,9 @@ public class AquirePackageHandler extends Handler {
         //hole package aus datenbank
         //füge dieses dem stack des users hinzu
         //response
+        String token = exchange.getRequestHeaders().get("Authorization").get(0);
+
+        DatabaseOperations.aquirePackageByToken(token);
 
 
         printBody(new InputStreamReader(exchange.getRequestBody(), "utf-8"));

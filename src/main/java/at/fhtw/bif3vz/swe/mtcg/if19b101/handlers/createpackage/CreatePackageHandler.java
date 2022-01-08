@@ -1,7 +1,9 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.createpackage;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCard;
+//import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCard;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCardDB;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.TestPackage;
 import com.sun.net.httpserver.HttpExchange;
@@ -23,11 +25,13 @@ public class CreatePackageHandler extends Handler {
         if(token.equals("Basic admin-mtcgToken")){
             System.out.println("OK - admin");
 
-            List<TestCard> tc = mapCardsList(exchange.getRequestBody(), TestCard.class);
+            List<TestCardDB> tc = mapCardsList(exchange.getRequestBody(), TestCardDB.class);
             TestPackage tp = new TestPackage();
             tp.addCards(tc);
-            Main.allPackages.add(tp);//here store package in database
-            System.out.println(Main.allPackages.toString());
+            DatabaseOperations.writePackageToDatabase(tp);
+
+            //Main.allPackages.add(tp);//here store package in database
+            //System.out.println(Main.allPackages.toString());
         }else{
             System.out.println("ERROR - no admin");
         }

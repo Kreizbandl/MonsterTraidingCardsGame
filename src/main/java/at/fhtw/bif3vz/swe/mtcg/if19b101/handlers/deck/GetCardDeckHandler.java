@@ -13,6 +13,10 @@ public class GetCardDeckHandler extends Handler {
         System.out.println("deck: get...");
         //return the deck
 
+        String token = exchange.getRequestHeaders().get("Authorization").get(0);
+
+        //DatabaseOperations.readDeckFromDatabase(token);
+
         printBody(new InputStreamReader(exchange.getRequestBody()));
 
     }

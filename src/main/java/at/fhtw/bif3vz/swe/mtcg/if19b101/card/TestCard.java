@@ -1,12 +1,12 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.card;
 
-public class TestCard {
+/*public class TestCard {
 
     private String id;
     private String name;
     private float damage;
 
-    public TestCard(String id, String name, int damage) {
+    public TestCard(String id, String name, float damage) {
         this.id = id;
         this.name = name;
         this.damage = damage;
@@ -46,4 +46,4 @@ public class TestCard {
                 ", damage=" + damage +
                 '}';
     }
-}
+}*/
