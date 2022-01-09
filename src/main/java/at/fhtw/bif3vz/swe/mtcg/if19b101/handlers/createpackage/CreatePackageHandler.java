@@ -15,7 +15,7 @@ public class CreatePackageHandler extends Handler {
 
     @Override
     protected void execute(HttpExchange exchange) throws IOException {
-        System.out.println("create Package");
+        System.out.println("-> CREATE PACKAGE");
         //...create Package
         //check if user is logged in as admin / token
         //add package to datenbank

@@ -13,7 +13,7 @@ public class AllCardsHandler extends Handler {
 
     @Override
     protected void execute(HttpExchange exchange) throws IOException {
-        System.out.println("all cards");
+        System.out.println("-> ALL CARDS");
         //...show all cards of user
 
         if(exchange.getRequestHeaders().get("Authorization") == null){

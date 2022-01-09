@@ -28,6 +28,23 @@ public abstract class Handler {
 
     abstract protected void execute(HttpExchange exchange) throws IOException;
 
+    public static enum StatusCode {
+        CREATED(201), NOCONTENT(204) ,OK(200), UNAUTHORIZED(401), FORBIDDEN(403);
+
+        final int code;
+        StatusCode(int code) {
+            this.code=code;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
+
+    protected <T> byte[] writeResponse(T response) throws IOException {
+        return new ObjectMapper().writeValueAsBytes(response);
+    }
+
     protected void printBody(InputStreamReader isr) throws IOException{
         BufferedReader br = new BufferedReader(isr);
 

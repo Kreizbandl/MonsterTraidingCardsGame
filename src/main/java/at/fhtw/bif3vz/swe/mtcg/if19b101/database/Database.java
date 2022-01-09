@@ -173,6 +173,28 @@ public class Database {
         return cards;
     }
 
+    public List<TestCardDB> getDeckCards(String token){
+        List<TestCardDB> cards = new ArrayList<>();
+        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                SELECT id, name, damage FROM cards
+                WHERE user_token = ? AND indeck = true;
+                """ )
+        ) {
+            statement.setString(1, token);
+            ResultSet resultSet = statement.executeQuery();
+            while( resultSet.next() ) {
+                cards.add(new TestCardDB(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getFloat(3)
+                ));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return cards;
+    }
+
     public void savePackage(TestPackage pack){
         try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
                 INSERT INTO packages

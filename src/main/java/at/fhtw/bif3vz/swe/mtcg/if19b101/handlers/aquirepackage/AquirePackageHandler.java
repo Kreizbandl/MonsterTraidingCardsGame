@@ -11,7 +11,7 @@ public class AquirePackageHandler extends Handler {
 
     @Override
     protected void execute(HttpExchange exchange) throws IOException {
-        System.out.println("aquire package");
+        System.out.println("-> AQUIRE PACKAGE");
         //aquire package here
         String token = exchange.getRequestHeaders().get("Authorization").get(0);
 

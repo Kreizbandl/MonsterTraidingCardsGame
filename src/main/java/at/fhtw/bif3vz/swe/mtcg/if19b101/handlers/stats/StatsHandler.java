@@ -10,7 +10,7 @@ public class StatsHandler extends Handler {
 
     @Override
     protected void execute(HttpExchange exchange) throws IOException {
-        System.out.println("stats");
+        System.out.println("-> STATS");
         //...return stats here
 
         //DatabaseOperations.readStatsFromDatabase();

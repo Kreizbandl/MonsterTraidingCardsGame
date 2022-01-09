@@ -151,6 +151,12 @@ public class DatabaseOperations {
         }
     }
 
+    public static List<TestCardDB> readDeckFromDatabase(String token){
+        Database db = new Database();
+        List<TestCardDB> cards = db.getDeckCards(token);
+        return cards;
+    }
+
     //readUserCardsFromDatabase
     //writeDeckToDatabase
     //readDeckFromDatabase

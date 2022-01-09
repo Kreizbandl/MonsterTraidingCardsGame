@@ -10,7 +10,7 @@ public class DeleteTradingDealHandler extends Handler {
 
     @Override
     protected void execute(HttpExchange exchange) throws IOException {
-        System.out.println("trading: delete");
+        System.out.println("-> TRADING-DELETE");
         //...delete trading deals here
 
         printBody(new InputStreamReader(exchange.getRequestBody()));

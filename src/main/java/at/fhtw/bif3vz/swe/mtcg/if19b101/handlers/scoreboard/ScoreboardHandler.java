@@ -10,7 +10,7 @@ public class ScoreboardHandler extends Handler {
 
     @Override
     protected void execute(HttpExchange exchange) throws IOException {
-        System.out.println("scoreboard");
+        System.out.println("-> SCOREBOARD");
         //...return scoreboard here
 
         //DatabaseOperations.readScoreboardFromDatabase();
