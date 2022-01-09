@@ -27,7 +27,13 @@ public class RegistrationHandler extends Handler {
         System.out.println(newUser.toString());
 
         //store in database
-        DatabaseOperations.writeUserToDatabase(newUser);
+        boolean ok = DatabaseOperations.writeUserToDatabase(newUser);
+
+        if(ok){
+            System.out.println("new user registered");
+        }else{
+            System.out.println("user already exists");
+        }
 
         //Main.userList.add(newUser);
 

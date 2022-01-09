@@ -13,12 +13,16 @@ public class AquirePackageHandler extends Handler {
     protected void execute(HttpExchange exchange) throws IOException {
         System.out.println("aquire package");
         //aquire package here
-        //hole package aus datenbank
-        //füge dieses dem stack des users hinzu
-        //response
         String token = exchange.getRequestHeaders().get("Authorization").get(0);
 
-        DatabaseOperations.aquirePackageByToken(token);
+        int error = DatabaseOperations.aquirePackageByToken(token);
+        if(error == 1){
+            System.out.println("no package left, sorry");
+        }else if(error == -1){
+            System.out.println("not enough coins left");
+        }else{
+            System.out.println("package aquired");
+        }
 
 
         printBody(new InputStreamReader(exchange.getRequestBody(), "utf-8"));

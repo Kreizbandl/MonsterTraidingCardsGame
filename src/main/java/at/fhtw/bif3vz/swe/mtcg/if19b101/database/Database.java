@@ -26,7 +26,8 @@ public class Database {
                         CREATE TABLE IF NOT EXISTS Users (
                         Username VARCHAR(50) NOT NULL PRIMARY KEY,
                         Password VARCHAR(50) NOT NULL,
-                        Token VARCHAR(50) NOT NULL
+                        Token VARCHAR(50) NOT NULL,
+                        Coins INT
                     )
                     """);
             DatabaseConnection.getInstance().executeSql("""
@@ -56,13 +57,14 @@ public class Database {
     public void saveUser(TestUser user) {
         try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
                 INSERT INTO users
-                (username, password, token)
-                VALUES (?, ?, ?);
+                (username, password, token, coins)
+                VALUES (?, ?, ?, ?);
                 """ )
         ) {
             statement.setString(1, user.getUsername() );
             statement.setString(2, user.getPassword() );
             statement.setString(3, user.getToken() );
+            statement.setInt(4, 20 );
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -109,6 +111,40 @@ public class Database {
         ) {
             statement.setString(1, cardID );
             statement.setString(2, token );
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public int getCoinsByToken(String token){
+        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                SELECT coins FROM users
+                WHERE token = ?;
+                """ )
+        ) {
+            statement.setString(1, token);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            int coins = resultSet.getInt(1);
+            return coins;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return -1;
+    }
+
+    public void updateCoinsByToken(String token){
+        int coins = getCoinsByToken(token);
+        coins -= 5;
+        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                UPDATE users
+                SET coins = ?
+                WHERE token = ?;
+                """ )
+        ) {
+            statement.setInt(1, coins);
+            statement.setString(2, token);
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -176,12 +212,13 @@ public class Database {
                 """)
         ){
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            ids.add(resultSet.getString(2));
-            ids.add(resultSet.getString(3));
-            ids.add(resultSet.getString(4));
-            ids.add(resultSet.getString(5));
-            ids.add(resultSet.getString(6));
+            while(resultSet.next()){
+                ids.add(resultSet.getString(2));
+                ids.add(resultSet.getString(3));
+                ids.add(resultSet.getString(4));
+                ids.add(resultSet.getString(5));
+                ids.add(resultSet.getString(6));
+            }
         }catch (SQLException throwables){
             throwables.printStackTrace();
         }
@@ -249,15 +286,18 @@ public class Database {
         ){
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            user.setUsername(resultSet.getString(1));
-            user.setPassword(resultSet.getString(2));
-            user.setToken(resultSet.getString(3));
+            while(resultSet.next()){
+                user.setUsername(resultSet.getString(1));
+                user.setPassword(resultSet.getString(2));
+                user.setToken(resultSet.getString(3));
+            }
         }catch (SQLException throwables){
             throwables.printStackTrace();
         }
         return user;
     }
+
+
 
     /*public List<TestCard> getCardsByName(String name){
         List<TestCard> cards = new ArrayList<>();

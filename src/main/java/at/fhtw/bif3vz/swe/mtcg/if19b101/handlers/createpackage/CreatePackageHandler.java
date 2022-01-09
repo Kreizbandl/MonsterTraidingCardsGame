@@ -29,6 +29,7 @@ public class CreatePackageHandler extends Handler {
             TestPackage tp = new TestPackage();
             tp.addCards(tc);
             DatabaseOperations.writePackageToDatabase(tp);
+            //missing check if card already exists
 
             //Main.allPackages.add(tp);//here store package in database
             //System.out.println(Main.allPackages.toString());

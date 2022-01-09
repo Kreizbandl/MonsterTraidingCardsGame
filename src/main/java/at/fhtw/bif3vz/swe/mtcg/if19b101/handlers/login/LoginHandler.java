@@ -33,10 +33,6 @@ public class LoginHandler extends Handler {
             System.out.println("LOGIN: ERR");
         }
 
-        System.out.println(dbUser.getToken());
-
-        //send token for user back to client
-
         //System.out.println(Main.userList.toString());
 
         //printBody(new InputStreamReader(exchange.getRequestBody(), "utf-8"));

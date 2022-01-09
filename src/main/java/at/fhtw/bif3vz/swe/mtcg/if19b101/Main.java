@@ -35,10 +35,9 @@ import java.util.*;
 public class Main {
 
     public static List<TestUser> userList = new ArrayList<>();//^^session data
-    public static List<TestPackage> allPackages = new ArrayList<>();//^^weg damit, packages gleich in datenbank
 
-    public static List<TestUser> users;
-    public static List<TestCardDB> cards;
+    //public static List<TestUser> users;
+    //public static List<TestCardDB> cards;
 
     public static void main(String[] args) throws IOException{
         HttpServer server = HttpServer.create(new InetSocketAddress(10001), 0);

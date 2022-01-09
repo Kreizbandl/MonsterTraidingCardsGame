@@ -16,10 +16,14 @@ public class AllCardsHandler extends Handler {
         System.out.println("all cards");
         //...show all cards of user
 
-        String token = exchange.getRequestHeaders().get("Authorization").get(0);
+        if(exchange.getRequestHeaders().get("Authorization") == null){
+            System.out.println("not authorized");
+        }else{
+            String token = exchange.getRequestHeaders().get("Authorization").get(0);
+            List<TestCardDB> cards = DatabaseOperations.readCardsFromDatabaseByToken(token);
+            System.out.println(cards);
+        }
 
-        List<TestCardDB> cards = DatabaseOperations.readCardsFromDatabaseByToken(token);
-        System.out.println(cards);
 
         //printBody(new InputStreamReader(exchange.getRequestBody(), "utf-8"));
 
