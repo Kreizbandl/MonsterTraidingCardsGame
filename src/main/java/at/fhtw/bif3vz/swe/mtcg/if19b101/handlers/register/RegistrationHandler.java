@@ -4,7 +4,7 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
+//import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;

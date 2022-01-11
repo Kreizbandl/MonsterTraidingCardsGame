@@ -7,27 +7,22 @@ import java.io.Serializable;
 
 public abstract class Card implements CardOperations, Serializable {
     protected String name;
-    protected int damage;
+    protected float damage;
     protected ElementType elementType;
 
-    //interface method
-    public Card(String name, int damage, ElementType elementType) {
+    public Card(String name, float damage, ElementType elementType) {
         this.name = name;
         this.damage = damage;
         this.elementType = elementType;
     }
-    //interface method
-    public int getDamage() {
+
+    public float getDamage() {
         return this.damage;
     }
-    //interface method
+
     public ElementType getElementType() {
         return this.elementType;
     }
-    //interface method
-    /*public String getName(){
-        return this.name;
-    }*/
 
     @Override
     public String toString() {

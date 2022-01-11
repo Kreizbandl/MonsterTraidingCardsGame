@@ -7,7 +7,7 @@ public interface CardOperations {
 
     boolean isMonster();
     //String getName();
-    int getDamage();
+    float getDamage();
     ElementType getElementType();
     MonsterType getMonsterType();//tut weh bei spellcard und bei enum monstertype
 

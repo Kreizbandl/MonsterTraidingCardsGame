@@ -1,89 +1,13 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.server;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
+/*import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.MonsterCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.SpellCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
-
 import java.util.*;
-import java.io.*;//client-server
-import java.net.*;//client-server
-//part of server
+
 public class Server {
-    //private static final int PORT = 6543;
-    //ServerSocket serverSocket;
-    //Socket socket;//wird probleme machen mit threads...
-
-    /*public static void main(String[] args) throws Exception{
-        //dummy data...
-        /*Map credentials = new HashMap();
-        credentials.put("Max", "1234");
-        credentials.put("Nina", "0000");
-        credentials.put("Marley", "1997");*/
-    /*    String username = "Max";
-        String password = "1234";
-
-        Server server = new Server();
-        server.waitConnetion();
-        Message message;
-
-        label:
-        do{
-            message = server.recvMessage();
-            System.out.println(message);
-            switch(message.getCommand()){
-                case "quit":
-                    //quit loop
-                    break label;
-                case "login":
-                    //login check
-                    System.out.println(message.getUsername() + message.getPassword());
-                    if(message.getUsername().equals(username) && message.getPassword().equals(password)){
-                        message.setError("login success");
-                    }else{
-                        message.setError("login failure");
-                    }
-                    server.sendMessage(message);
-                    break;
-                default:
-                    //unknown command
-                    System.out.println("Unknown command... '?' or 'help'");
-                    break;
-            }
-        }while(true);
-
-        server.closeServer();
-    }*/
-
-    /*public Server() throws Exception{
-        serverSocket = new ServerSocket(PORT);
-    }*/
-    /*public void waitConnetion() throws Exception{
-        socket = serverSocket.accept();//ab hier threads...
-    }*/
-    /*public Message recvMessage() throws Exception{//recv msg
-        ObjectInputStream inStream = new ObjectInputStream(socket.getInputStream());
-        return (Message)inStream.readObject();
-    }*/
-        /*public Package recvPackage() throws Exception{//recv msg
-            ObjectInputStream inStream = new ObjectInputStream(socket.getInputStream());
-            //Message msg = (Message)inStream.readObject();
-            //System.out.println(recvMessage.username + recvMessage.password);
-            return (Package)inStream.readObject();
-        }*/
-    /*public void sendMessage(Message message) throws Exception{//send msg
-        ObjectOutputStream outStream = new ObjectOutputStream(socket.getOutputStream());
-        outStream.writeObject(message);//problem sending different kinds of objects?
-    }*/
-        /*public void sendPackage(Package pack) throws Exception{//send msg
-            ObjectOutputStream ouStream = new ObjectOutputStream(socket.getOutputStream());
-            //Message sendMessage = new Message("Username","Password");
-            ouStream.writeObject(pack);
-        }*/
-    /*public void closeServer() throws Exception{
-        serverSocket.close();
-    }*/
 
     private Card generateRandomCard(){
         Random rand = new Random();
@@ -120,4 +44,4 @@ public class Server {
         pack.addCards(packageCards);
         return pack;
     }
-}
+}*/

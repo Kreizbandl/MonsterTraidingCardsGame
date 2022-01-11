@@ -2,12 +2,11 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101.user;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.interfaces.PackOperations;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-//part of server
+
 public class Stack implements PackOperations {
     private List<Card> stackCards = new ArrayList<>();
 
@@ -28,7 +27,7 @@ public class Stack implements PackOperations {
                 {
                     public int compare(Card c1, Card c2)
                     {
-                        return Integer.valueOf(c2.getDamage()).compareTo(c1.getDamage());
+                        return Float.valueOf(c2.getDamage()).compareTo(c1.getDamage());
                     }
                 }
         );

@@ -20,7 +20,15 @@ public class EditCardDeckHandler extends Handler {
         System.out.println(cardIDs);
 
         System.out.println("user: " + token);
-        DatabaseOperations.writeDeckToDatabase(token, cardIDs);
+        //DatabaseOperations.writeDeckToDatabase(token, cardIDs);
+        int error = DatabaseOperations.updateDeckToDatabase(token, cardIDs);
+        if(error == -1){
+            exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), 0);
+        }else if(error == -2){
+            exchange.sendResponseHeaders(StatusCode.FORBIDDEN.getCode(), 0);
+        }else{
+            exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
+        }
 
         //printBody(new InputStreamReader(exchange.getRequestBody()));
 

@@ -1,5 +1,6 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.scoreboard;
 
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -13,7 +14,8 @@ public class ScoreboardHandler extends Handler {
         System.out.println("-> SCOREBOARD");
         //...return scoreboard here
 
-        //DatabaseOperations.readScoreboardFromDatabase();
+
+        System.out.println(DatabaseOperations.readScoreboardFromDatabase());
 
         printBody(new InputStreamReader(exchange.getRequestBody()));
 

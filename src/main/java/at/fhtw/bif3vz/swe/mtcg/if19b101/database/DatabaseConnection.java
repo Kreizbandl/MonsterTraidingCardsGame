@@ -1,7 +1,6 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.database;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.sql.*;
 
 

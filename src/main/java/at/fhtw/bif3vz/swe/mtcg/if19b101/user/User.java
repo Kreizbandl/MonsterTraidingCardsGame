@@ -1,34 +1,32 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.user;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
-//import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Client;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.server.Server;
 
 import java.io.IOException;
 import java.util.List;
 //part of server
 public class User {
     private String username;
-    private String password;
-    private int coins;
+    //private String password;
+    //private int coins;
         private Stack stack;
         private Deck deck;
-        private Server server;//statt server -> client
+        //private Server server;//statt server -> client
         //private Client client;
 
     public User(){
-        this.coins = 20;
+        //this.coins = 20;
         this.stack = new Stack();
         this.deck = new Deck();
     }
 
-    public User(String username, String password) throws IOException {
+    public User(String username) throws IOException {
         this.username = username;
-        this.password = password;
-        this.coins = 20;
+        //this.password = password;
+        //this.coins = 20;
             this.stack = new Stack();
             this.deck = new Deck();
-            this.server = new Server();
+            //this.server = new Server();
             //this.client = new Client();
     }
 
@@ -36,9 +34,9 @@ public class User {
         this.username = username;
     }
 
-    public void setPassword(String password) {
+    /*public void setPassword(String password) {
         this.password = password;
-    }
+    }*/
 
     //interne Methoden
     public List<Card> getStackOfUser() {//return alle karten als list
@@ -53,6 +51,11 @@ public class User {
         return this.deck.getAllCards();
     }
 
+    public void addCardsToDeck(List<Card> cards){
+        this.deck.addCards(cards);
+    }
+
+
     public void addBestCardsToDeck(){
         this.deck.addCards(this.stack.getBestFourCardsOfStack());
     }
@@ -61,17 +64,15 @@ public class User {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", coins=" + coins +
                 ", stack=" + getStackOfUser().toString() +
                 "}";
     }
 
     //server abfragen
-    public void aquirePackage(){
+    /*public void aquirePackage(){
         //login/register to server
         this.coins -= 5;
         this.stack.addCards(this.server.getPackageFromServer().getAllCards());//statt direkt server. ... client-server verbindung
         //this.addBestCardsToDeck();//besser extra, manage deck
-    }
+    }*/
 }

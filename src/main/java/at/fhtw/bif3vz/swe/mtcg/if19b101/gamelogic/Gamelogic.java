@@ -12,7 +12,7 @@ public class Gamelogic {
     public Gamelogic() { }
 
     //this function has to be called twice -> then compare returned int damage of first argument card
-    public int getFirstCurrentDamage(CardOperations card1, CardOperations card2){//Card card1, Card card2
+    public float getFirstCurrentDamage(CardOperations card1, CardOperations card2){//Card card1, Card card2
 
         //both are monster cards -> just return damage
         if(card1.isMonster() && card2.isMonster()){//card1 instanceof MonsterCard && card2 instanceof MonsterCard
@@ -80,8 +80,8 @@ public class Gamelogic {
         //check if: WATER -> FIRE, FIRE -> NORMAL, NORMAL -> WATER
         //effective
         if(eType1 == ElementType.WATER && eType2 == ElementType.FIRE ||
-           eType1 == ElementType.FIRE && eType2 == ElementType.NORMAL ||
-           eType1 == ElementType.NORMAL && eType2 == ElementType.WATER){
+           eType1 == ElementType.FIRE && eType2 == ElementType.REGULAR ||
+           eType1 == ElementType.REGULAR && eType2 == ElementType.WATER){
             return 2;
         //no effect
         }else if(eType1 == eType2){

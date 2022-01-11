@@ -1,13 +1,10 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.createpackage;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
-//import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCardDB;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.TestPackage;
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -29,10 +26,6 @@ public class CreatePackageHandler extends Handler {
             TestPackage tp = new TestPackage();
             tp.addCards(tc);
             DatabaseOperations.writePackageToDatabase(tp);
-            //missing check if card already exists
-
-            //Main.allPackages.add(tp);//here store package in database
-            //System.out.println(Main.allPackages.toString());
         }else{
             System.out.println("ERROR - no admin");
         }

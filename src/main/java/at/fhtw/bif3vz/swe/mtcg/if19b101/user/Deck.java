@@ -2,10 +2,9 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101.user;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.interfaces.PackOperations;
-
 import java.util.ArrayList;
 import java.util.List;
-//part of server
+
 public class Deck implements PackOperations {
     private List<Card> deckCards = new ArrayList<>();
 

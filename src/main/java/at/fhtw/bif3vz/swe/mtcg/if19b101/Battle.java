@@ -2,14 +2,10 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.user.Deck;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-//part of server
+
 public class Battle {
 
     private List<Card> deckUser1;
@@ -55,7 +51,7 @@ public class Battle {
                 );
 
                 //which card won (1,0,-1)
-                roundWinner = Integer.compare(
+                roundWinner = Float.compare(
                         gamelogic.getFirstCurrentDamage(deckUser1.get(0), deckUser2.get(0)),
                         gamelogic.getFirstCurrentDamage(deckUser2.get(0), deckUser1.get(0)));
 
@@ -73,6 +69,6 @@ public class Battle {
                     }
 
                 roundCount++;
-            }while(roundCount <= 50);
+            }while(roundCount <= 100);
     }
 }

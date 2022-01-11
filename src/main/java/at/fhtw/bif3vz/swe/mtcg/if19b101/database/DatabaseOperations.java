@@ -1,11 +1,11 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.database;
 
-//import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCardDB;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.server.TestPackage;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
 
-import java.util.ArrayList;
+import javax.xml.crypto.Data;
+import java.util.HashMap;
 import java.util.List;
 
 public class DatabaseOperations {
@@ -44,6 +44,11 @@ public class DatabaseOperations {
 
     }
 
+    public static HashMap<String, Integer> readScoreboardFromDatabase(){
+        Database db = new Database();
+        return db.getScoreboard();
+    }
+
     /*public static void writeCardsListToDatabase(List<TestCardDB> data) {
         Database daoDb = new Database();
         for( TestCardDB item : data ) {
@@ -71,6 +76,11 @@ public class DatabaseOperations {
         System.out.println("  delete item: " + user);
         db.deleteUser(user.name());
     }*/
+
+    public static int addUserToBattle(String token){
+        Database db = new Database();
+        return db.addBattle(token);
+    }
 
     public static void deleteAllUsersInDatabase(){
         Database db = new Database();
@@ -108,6 +118,11 @@ public class DatabaseOperations {
                     item.getDamage()
             ) );
         }
+    }
+
+    public static List<String> readBattleUsernamesFromDatabase(){
+        Database db = new Database();
+        return db.getBattleNames();
     }
 
     public static int aquirePackageByToken(String token){
@@ -151,10 +166,25 @@ public class DatabaseOperations {
         }
     }
 
+    public static int readELOFromDatabase(String token){
+        Database db = new Database();
+        return db.getUserStats(token);
+    }
+
+    public static int updateDeckToDatabase(String token, List<String> cardIds){
+        Database db = new Database();
+        return db.updateDeck(token, cardIds);
+    }
+
     public static List<TestCardDB> readDeckFromDatabase(String token){
         Database db = new Database();
         List<TestCardDB> cards = db.getDeckCards(token);
         return cards;
+    }
+
+    public static List<String> readBattleTokensFromDatabase(){
+        Database db = new Database();
+        return db.getBattleTokens();
     }
 
     //readUserCardsFromDatabase
