@@ -17,16 +17,17 @@ public class EditCardDeckHandler extends Handler {
 
         String token = exchange.getRequestHeaders().get("Authorization").get(0);
         List<String> cardIDs = mapStringList(exchange.getRequestBody());
-        System.out.println(cardIDs);
+        System.out.println("chosen cards" + cardIDs);
 
-        System.out.println("user: " + token);
-        //DatabaseOperations.writeDeckToDatabase(token, cardIDs);
         int error = DatabaseOperations.updateDeckToDatabase(token, cardIDs);
         if(error == -1){
+            System.out.println("ERR: card not from this user");
             exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), 0);
         }else if(error == -2){
+            System.out.println("ERR: not 4 card ids");
             exchange.sendResponseHeaders(StatusCode.FORBIDDEN.getCode(), 0);
         }else{
+            System.out.println("cards added to deck");
             exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
         }
 

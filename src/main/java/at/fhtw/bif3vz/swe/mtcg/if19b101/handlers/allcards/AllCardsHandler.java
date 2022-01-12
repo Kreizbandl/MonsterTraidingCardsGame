@@ -1,6 +1,7 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.allcards;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCardDB;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.CardDB;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import com.sun.net.httpserver.HttpExchange;
@@ -16,25 +17,27 @@ public class AllCardsHandler extends Handler {
         System.out.println("-> ALL CARDS");
         //...show all cards of user
 
-        if(exchange.getRequestHeaders().get("Authorization") == null){
-            System.out.println("not authorized");
+        String token = exchange.getRequestHeaders().get("Authorization").get(0);//ifs umkehren, zuerst ob token == null, dann erst ob isLogged()
+        if(!Main.isLogged(token)){
+            System.out.println("ERR: user isn't logged in");
             exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{
-            String token = exchange.getRequestHeaders().get("Authorization").get(0);
-            List<TestCardDB> cards = DatabaseOperations.readCardsFromDatabaseByToken(token);
-            System.out.println(cards);
-            byte[] response;
-            exchange.getResponseHeaders().set("Content-Type", "application/json");
-            exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
-            response = writeResponse(cards);
+            if(token == null){
+                System.out.println("ERR: not authorized");
+                exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
+            }else{
+                List<CardDB> cards = DatabaseOperations.readAllCardsByToken(token);
+                System.out.println(cards);
+                byte[] response;
+                exchange.getResponseHeaders().set("Content-Type", "application/json");
+                exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
+                response = writeResponse(cards);
 
-            OutputStream responseBody = exchange.getResponseBody();
-            responseBody.write(response);
-            responseBody.close();
+                OutputStream responseBody = exchange.getResponseBody();
+                responseBody.write(response);
+                responseBody.close();
+            }
         }
-
-
-        //printBody(new InputStreamReader(exchange.getRequestBody(), "utf-8"));
 
     }
 }

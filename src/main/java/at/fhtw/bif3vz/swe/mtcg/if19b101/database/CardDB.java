@@ -1,4 +1,4 @@
-package at.fhtw.bif3vz.swe.mtcg.if19b101.card;
+package at.fhtw.bif3vz.swe.mtcg.if19b101.database;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestCardDB implements Serializable {
+public class CardDB implements Serializable {
     private String id;
     private String name;
     private float damage;

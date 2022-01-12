@@ -18,7 +18,7 @@ public class Battle {
         deckUser2 = u2.getDeckOfUser();
     }
 
-    public void showBattle(){
+    public int showBattle(){
         //roundWinner 1, 0, -1
         int roundWinner, roundCount = 1;
 
@@ -37,8 +37,12 @@ public class Battle {
                     System.out.println("             WINNER IS PLAYER 2");
                 }else if(deckUser2.isEmpty()){
                     System.out.println("             WINNER IS PLAYER 1");
-                }else{
+                }/*else{
                     System.out.println("                NO WINNER");
+                }*/
+
+                if(deckUser1.isEmpty() || deckUser2.isEmpty()){
+                    break;
                 }
 
                 //little round overview
@@ -70,5 +74,13 @@ public class Battle {
 
                 roundCount++;
             }while(roundCount <= 100);
+
+            if(deckUser1.isEmpty()){
+                return 1;
+            }else if(deckUser2.isEmpty()){
+                return 2;
+            }else{
+                return 0;
+            }
     }
 }

@@ -21,12 +21,11 @@ import java.util.*;
 public class Main {
 
     public static List<String> loggedUsersTokenList = new ArrayList<>();//session data
+    public static String adminToken = "Basic admin-mtcgToken";
 
     public static void main(String[] args) throws IOException{
         HttpServer server = HttpServer.create(new InetSocketAddress(10001), 0);
 
-        //TODO multiple endpoints for different executes
-        //how to cleaner?
         Handler regHandler = new RegHandler();
         server.createContext("/users",regHandler::handle);
 
@@ -69,5 +68,9 @@ public class Main {
         }
 
         //DatabaseConnection.getInstance().close();
+    }
+
+    public static boolean isLogged(String token){
+        return loggedUsersTokenList.contains(token);
     }
 }

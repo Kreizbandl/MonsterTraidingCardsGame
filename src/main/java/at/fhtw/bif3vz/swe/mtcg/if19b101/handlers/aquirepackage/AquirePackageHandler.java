@@ -1,5 +1,6 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.aquirepackage;
 
+import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import com.sun.net.httpserver.HttpExchange;
@@ -14,18 +15,22 @@ public class AquirePackageHandler extends Handler {
         System.out.println("-> AQUIRE PACKAGE");
         //aquire package here
         String token = exchange.getRequestHeaders().get("Authorization").get(0);
-
-        int error = DatabaseOperations.aquirePackageByToken(token);
-        if(error == 1){
-            System.out.println("no package left, sorry");
-        }else if(error == -1){
-            System.out.println("not enough coins left");
+        if(!Main.isLogged(token)){
+            System.out.println("ERR: user isn't logged in");
+            exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{
-            System.out.println("package aquired");
+            int error = DatabaseOperations.aquirePackageByToken(token);
+            if(error == 1){
+                System.out.println("ERR: no package left, sorry");
+                exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
+            }else if(error == -1){
+                System.out.println("ERR: not enough coins left");
+                exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
+            }else{
+                System.out.println("package aquired");
+                exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
+            }
         }
-
-
-        printBody(new InputStreamReader(exchange.getRequestBody(), "utf-8"));
 
     }
 }

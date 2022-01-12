@@ -1,34 +1,33 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.server;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 //import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCard;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCardDB;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.CardDB;
 
 import java.util.List;
 
 public class TestPackage {
 
-    private List<TestCardDB> packageCards;
+    private List<CardDB> packageCards;
 
     public TestPackage(){}
 
-    public TestPackage(List<TestCardDB> tc){
+    public TestPackage(List<CardDB> tc){
         this.packageCards = tc;
     }
 
-    public List<TestCardDB> getPackageCards() {
+    public List<CardDB> getPackageCards() {
         return packageCards;
     }
 
-    public void setPackageCards(List<TestCardDB> packageCards) {
+    public void setPackageCards(List<CardDB> packageCards) {
         this.packageCards = packageCards;
     }
 
-    public List<TestCardDB> getAllCards(){
+    public List<CardDB> getAllCards(){
         return this.packageCards;
     }
 
-    public void addCards(List<TestCardDB> cards){
+    public void addCards(List<CardDB> cards){
         this.packageCards = cards;
     }
 

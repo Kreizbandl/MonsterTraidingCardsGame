@@ -1,6 +1,7 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.deck;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.TestCardDB;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.CardDB;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import com.sun.net.httpserver.HttpExchange;
@@ -15,28 +16,22 @@ public class GetCardDeckHandler extends Handler {
         System.out.println("-> DECK-GET");
         //return the deck
 
-        String token = exchange.getRequestHeaders().get("Authorization").get(0);
-        //System.out.println(token);
+        String token = exchange.getRequestHeaders().get("Authorization").get(0);//wieso immer neu schreiben? bessere möglichkeit?
+        if(!Main.isLogged(token)){
+            System.out.println("ERR: user isn't logged in");
+            exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
+        }else{
+            List<CardDB> cards = DatabaseOperations.readDeckByToken(token);
+            System.out.println("deck: " + cards);
 
-        List<TestCardDB> cards = DatabaseOperations.readDeckFromDatabase(token);
-        System.out.println(cards);
+            byte[] response;
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
+            response = writeResponse(cards);
 
-        //check if format is wanted (!kann nicht als erstes aufgerufen werden?, macht probleme :()
-        /*if(exchange.getRequestURI().getQuery().equals("format=plain")){
-            System.out.println("you want plain format, ok");
-        }*/
-
-        byte[] response;
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
-        response = writeResponse(cards);
-
-        OutputStream responseBody = exchange.getResponseBody();
-        responseBody.write(response);
-        responseBody.close();
-
-
-        //printBody(new InputStreamReader(exchange.getRequestBody()));
-
+            OutputStream responseBody = exchange.getResponseBody();
+            responseBody.write(response);
+            responseBody.close();
+        }
     }
 }
