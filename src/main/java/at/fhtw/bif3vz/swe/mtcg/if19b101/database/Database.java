@@ -23,7 +23,9 @@ public class Database {
                         Password VARCHAR(50) NOT NULL,
                         Token VARCHAR(50) NOT NULL,
                         Coins INT,
-                        ELO INT
+                        ELO INT,
+                        Bio VARCHAR(50),
+                        Image VARCHAR(50)
                     )
                     """);
             DatabaseConnection.getInstance().executeSql("""
@@ -95,6 +97,44 @@ public class Database {
             throwables.printStackTrace();
         }
         return user;
+    }
+
+    public List<String> getUserProfile(String token){
+        List<String> data = new ArrayList<>();
+        try(PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                SELECT username, bio, image 
+                FROM users 
+                WHERE token = ?
+                """)
+        ){
+            statement.setString(1, token);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                data.add(resultSet.getString(1));
+                data.add(resultSet.getString(2));
+                data.add(resultSet.getString(3));
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return data;
+    }
+
+    public void updateUserProfile(String token, List<String> data){
+        try(PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                UPDATE users
+                SET username = ?, bio = ?, image = ?
+                WHERE token = ?;
+                """)
+        ){
+            statement.setString(1, data.get(0));
+            statement.setString(2, data.get(1));
+            statement.setString(3, data.get(2));
+            statement.setString(4, token);
+            statement.execute();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
     }
 
     public String readUsernameByToken(String token){
@@ -458,91 +498,4 @@ public class Database {
         }
         return scoreboard;
     }
-
-    /////////////////////////////////////////////////////////////////////////////////
-
-    /*public List<String> getBattleNames(){
-        List<String> token = getBattleTokens();
-        List<String> names = new ArrayList<>();
-        for(String item : token){
-            names.add(readUsernameByToken(item));
-        }
-        return names;
-    }*/
-
-    /*public int addUserToBattle(String token){
-        //get last entry
-        int battleID = -1;
-        String player1 = null, player2 = null;
-        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
-                SELECT * FROM battles ORDER BY battleid DESC LIMIT 1;
-                """ )
-        ) {
-            ResultSet resultSet = statement.executeQuery();
-            while( resultSet.next() ) {
-                battleID = resultSet.getInt(1);
-                player1 = resultSet.getString(2);
-                player2 = resultSet.getString(3);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        //check if its the same user
-        if(player1.equals(token)){
-            return -1;
-        }
-
-        //if last entry is empty (no games yet) or full (two players) [gleicher zustand]
-        if(player1 == null && player2 == null || player1 != null && player2 != null){
-            try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
-                INSERT INTO battles
-                (token1)
-                VALUES (?);
-                """ )
-            ) {
-                statement.setString(1, token);
-                statement.execute();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            return 0;
-        }else{
-            try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
-                UPDATE battles
-                SET token2 = ?
-                WHERE battleid = ?;
-                """ )
-            ) {
-                statement.setString(1, token);
-                statement.setInt(2, battleID);
-                statement.execute();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            return 1;
-        }
-    }*/
-
-    /*public void deleteAllUsers() {
-        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
-                DELETE FROM users;
-                """)
-        ) {
-            statement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }*/
-
-    /*public void deleteAllCards() {
-        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
-                DELETE FROM cards;
-                """)
-        ) {
-            statement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }*/
 }

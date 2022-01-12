@@ -13,9 +13,11 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.scoreboard.ScoHandler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.stats.StaHandler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.tradings.TraHandler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
-import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.*;
+
 import java.io.*;
 import java.net.*;
+import java.net.Authenticator;
 import java.util.*;
 
 public class Main {
@@ -24,39 +26,40 @@ public class Main {
     public static String adminToken = "Basic admin-mtcgToken";
 
     public static void main(String[] args) throws IOException{
+
         HttpServer server = HttpServer.create(new InetSocketAddress(10001), 0);
 
-        Handler regHandler = new RegHandler();
-        server.createContext("/users",regHandler::handle);
 
-        Handler logHandler = new LogHandler();
-        server.createContext("/sessions",logHandler::handle);
+        server.createContext("/users",new RegHandler()::handle);
+        server.createContext("/sessions",new LogHandler()::handle);
 
-        Handler crePackHandler = new CrePackHandler();
-        server.createContext("/packages",crePackHandler::handle);
 
-        Handler aquPackHandler = new AquPackHandler();
-        server.createContext("/transactions/packages",aquPackHandler::handle);
+        //critical part here!!!
+        //secure endpoint
+        server.createContext("/packages",new CrePackHandler()::handle).setAuthenticator(new BasicAuthenticator(("packages")) {
+            @Override
+            public Result authenticate(HttpExchange t) {
+                return super.authenticate(t);
+            }
 
-        Handler allCarHandler = new AllCarHandler();
-        server.createContext("/cards",allCarHandler::handle);
+            @Override
+            public boolean checkCredentials(String username, String password) {
+                System.out.println(username + " : " + password);
+                return username.equals("") && password.equals("");
+            }
+        });
+        //https://tipsfordev.com/java-httpserver-basic-authentication-for-different-request-methods
+        //critical part here!!!
 
-        Handler carDecHandler = new CarDeckHandler();
-        server.createContext("/deck", carDecHandler::handle);
 
-        //missing 14) /users/kienboec...
 
-        Handler staHandler = new StaHandler();
-        server.createContext("/stats", staHandler::handle);
-
-        Handler scoHandler = new ScoHandler();
-        server.createContext("/score", scoHandler::handle);
-
-        Handler batHandler = new BatHandler();
-        server.createContext("/battles", batHandler::handle);
-
-        Handler traHandler = new TraHandler();
-        server.createContext("/tradings", traHandler::handle);
+        server.createContext("/transactions/packages",new AquPackHandler()::handle);
+        server.createContext("/cards",new AllCarHandler()::handle);
+        server.createContext("/deck", new CarDeckHandler()::handle);
+        server.createContext("/stats", new StaHandler()::handle);
+        server.createContext("/score", new ScoHandler()::handle);
+        server.createContext("/battles", new BatHandler()::handle);
+        server.createContext("/tradings", new TraHandler()::handle);
 
         server.start();
 
@@ -67,10 +70,23 @@ public class Main {
             Database.initDb();
         }
 
+        /*public static void main (String[] args) throws Exception {
+            HttpServer server = HttpServer.create(new InetSocketAddress(0), 0);
+            try {
+                Handler handler = new Handler();
+                HttpContext ctx = server.createContext("/test", handler);
+
+                BasicAuthenticator a = new BasicAuthenticator(REALM) {
+                    public boolean checkCredentials (String username, String pw) {
+                        return USERNAME.equals(username) && PASSWORD.equals(pw);
+                    }
+                };
+                ctx.setAuthenticator(a);
+                server.start();*/
+
+
         //DatabaseConnection.getInstance().close();
     }
 
-    public static boolean isLogged(String token){
-        return loggedUsersTokenList.contains(token);
-    }
+
 }

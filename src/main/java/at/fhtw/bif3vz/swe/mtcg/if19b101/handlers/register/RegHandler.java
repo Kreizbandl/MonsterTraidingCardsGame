@@ -11,6 +11,10 @@ public class RegHandler extends Handler {
     protected void execute(HttpExchange exchange) throws IOException {
         if(exchange.getRequestMethod().equals("POST")){
             new RegistrationHandler().execute(exchange);
+        }else if(exchange.getRequestMethod().equals("GET")){
+            new GetUserProfileHandler().execute(exchange);
+        }else if(exchange.getRequestMethod().equals("PUT")){
+            new EditUserProfileHandler().execute(exchange);
         }else{
             System.out.println("unsupported method in register");
         }

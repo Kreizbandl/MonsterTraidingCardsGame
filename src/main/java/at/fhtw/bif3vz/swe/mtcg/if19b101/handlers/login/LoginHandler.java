@@ -18,7 +18,7 @@ public class LoginHandler extends Handler {
         TestUser reqUser = mapRequest(exchange.getRequestBody(),TestUser.class);
         TestUser dbUser = DatabaseOperations.readUserDataByName(reqUser.getUsername());//besser by username and password
 
-        if(Main.isLogged(dbUser.getToken())){
+        if(isLogged(dbUser.getToken())){
             System.out.println("ERR: user is already logged in");
             exchange.sendResponseHeaders(StatusCode.NOCONTENT.getCode(), -1);
         }else{

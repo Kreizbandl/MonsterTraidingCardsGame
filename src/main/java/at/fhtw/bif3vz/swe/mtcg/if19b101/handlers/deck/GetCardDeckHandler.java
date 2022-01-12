@@ -16,15 +16,15 @@ public class GetCardDeckHandler extends Handler {
         System.out.println("-> DECK-GET");
         //return the deck
 
-        String token = exchange.getRequestHeaders().get("Authorization").get(0);//wieso immer neu schreiben? bessere möglichkeit?
-        if(!Main.isLogged(token)){
+        String token = getAuthorizationToken(exchange);
+        if(!isLogged(token)){
             System.out.println("ERR: user isn't logged in");
             exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{
             List<CardDB> cards = DatabaseOperations.readDeckByToken(token);
             System.out.println("deck: " + cards);
 
-            byte[] response;
+            byte[] response;//in function verpacken!
             exchange.getResponseHeaders().set("Content-Type", "application/json");
             exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
             response = writeResponse(cards);

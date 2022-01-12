@@ -14,8 +14,9 @@ public class AquirePackageHandler extends Handler {
     protected void execute(HttpExchange exchange) throws IOException {
         System.out.println("-> AQUIRE PACKAGE");
         //aquire package here
-        String token = exchange.getRequestHeaders().get("Authorization").get(0);
-        if(!Main.isLogged(token)){
+
+        String token = getAuthorizationToken(exchange);
+        if(!isLogged(token)){
             System.out.println("ERR: user isn't logged in");
             exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{

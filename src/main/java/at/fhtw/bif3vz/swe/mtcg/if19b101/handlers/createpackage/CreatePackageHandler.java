@@ -15,8 +15,9 @@ public class CreatePackageHandler extends Handler {
         System.out.println("-> CREATE PACKAGE");
         //...create Package
 
-        String token = exchange.getRequestHeaders().get("Authorization").get(0);
-        if(!Main.isLogged(token)){
+        //String token = exchange.getRequestHeaders().get("Authorization").get(0);
+        String token = getAuthorizationToken(exchange);
+        if(!isLogged(token)){
             System.out.println("ERR: user isn't logged in");
             exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{

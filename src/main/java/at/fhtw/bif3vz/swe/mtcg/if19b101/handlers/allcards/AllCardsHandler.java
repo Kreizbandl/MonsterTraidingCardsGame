@@ -17,13 +17,14 @@ public class AllCardsHandler extends Handler {
         System.out.println("-> ALL CARDS");
         //...show all cards of user
 
-        String token = exchange.getRequestHeaders().get("Authorization").get(0);//ifs umkehren, zuerst ob token == null, dann erst ob isLogged()
-        if(!Main.isLogged(token)){
-            System.out.println("ERR: user isn't logged in");
+        //ifs umkehren, zuerst ob token == null, dann erst ob isLogged()
+        String token = getAuthorizationToken(exchange);
+        if(token == null){
+            System.out.println("ERR: not authorized");
             exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{
-            if(token == null){
-                System.out.println("ERR: not authorized");
+            if(!isLogged(token)){
+                System.out.println("ERR: user isn't logged in");
                 exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
             }else{
                 List<CardDB> cards = DatabaseOperations.readAllCardsByToken(token);

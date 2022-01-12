@@ -46,7 +46,7 @@ public class DatabaseConnection implements Closeable {
     }
 
     public static boolean executeSql(Connection connection, String sql, boolean ignoreIfFails) throws SQLException{
-        try (Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()){//use this , simpler
             statement.execute(sql);
             return true;
         }catch (SQLException e){

@@ -15,7 +15,8 @@ public class EditCardDeckHandler extends Handler {
         System.out.println("-> DECK-EDIT");
         //... edit deck here
 
-        String token = exchange.getRequestHeaders().get("Authorization").get(0);
+        //String token = exchange.getRequestHeaders().get("Authorization").get(0);
+        String token = getAuthorizationToken(exchange);
         List<String> cardIDs = mapStringList(exchange.getRequestBody());
         System.out.println("chosen cards" + cardIDs);
 

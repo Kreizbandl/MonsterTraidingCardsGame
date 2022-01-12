@@ -14,8 +14,9 @@ public class StatsHandler extends Handler {
         System.out.println("-> STATS");
         //...return stats here
 
-        String token = exchange.getRequestHeaders().get("Authorization").get(0);
-        if(!Main.isLogged(token)){
+        //String token = exchange.getRequestHeaders().get("Authorization").get(0);
+        String token = getAuthorizationToken(exchange);
+        if(!isLogged(token)){
             System.out.println("ERR: user isn't logged in");
             exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{
