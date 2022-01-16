@@ -15,6 +15,8 @@ public class ScoreboardHandler extends Handler {
         System.out.println("-> SCOREBOARD");
         //...return scoreboard here
 
+        //sorted list !!
+
         //String token = exchange.getRequestHeaders().get("Authorization").get(0);
         String token = getAuthorizationToken(exchange);
         if(!isLogged(token)){

@@ -4,11 +4,55 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.server.TestPackage;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class DatabaseOperations {
 
     //would be nice: function to enable other functions only if user is alloed to (auth-token)
     private static Database db = new Database();
+
+    //trade
+    public static void writeTradeToDatabase(String token, TradeRecord trade){
+        db.saveTrade(token, trade);
+    }
+
+    public static TradeRecord readTradeToDatabase(String token){
+        return db.getTrades(token);
+    }
+
+    public static void removeTradeFromDatabase(String token, String id){
+        //no check if trade is from user
+        db.deleteTrade(token, id);
+    }
+
+    public static int tradeCards(String token, String tradeId, String giveCardId){
+        //check if cards infos ok -> type, damage, token, giveCard form user
+        TradeRecord trade = db.getTradeById(tradeId);
+        if(Objects.equals(trade.id(), "-1")){
+            System.out.println("ERR: -1");
+        }
+        //check if trade from current user
+        if(trade.token().equals(token)){
+            return -1;
+        }
+
+        //compare cards
+        //CardDB card2 = db.getCardById(trade.cardToTrade());
+        CardDB card1 = db.getCardById(giveCardId);
+        if(card1.getDamage() < trade.minimumDamage()){
+            return -2;
+        }
+        /*if(!card1.getName().contains(trade.type())){
+            return -3;
+        }*/
+
+        //swap cards, delete trade
+        db.updateCard(trade.cardToTrade(), token);
+        db.updateCard(giveCardId, trade.token());
+        db.deleteTrade(trade.token(), trade.id());
+
+        return 0;
+    }
 
     //user
     public static boolean writeUserToDatabase(TestUser user) {

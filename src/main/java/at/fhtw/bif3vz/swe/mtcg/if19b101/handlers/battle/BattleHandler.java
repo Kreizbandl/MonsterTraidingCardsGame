@@ -25,7 +25,6 @@ public class BattleHandler extends Handler {
         //request for battle
 
         //login for battle
-        //String token = exchange.getRequestHeaders().get("Authorization").get(0);
         String token = getAuthorizationToken(exchange);
         if(!isLogged(token)){
             System.out.println("ERR: user isn't logged in");
@@ -71,8 +70,6 @@ public class BattleHandler extends Handler {
                     DatabaseOperations.updateELO(tokens.get(0),2);
                     DatabaseOperations.updateELO(tokens.get(1),1);
                 }
-
-                //!deck cards to winner
             }
         }
 

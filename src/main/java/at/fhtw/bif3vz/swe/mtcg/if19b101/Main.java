@@ -36,7 +36,7 @@ public class Main {
 
         //critical part here!!!
         //secure endpoint
-        server.createContext("/packages",new CrePackHandler()::handle).setAuthenticator(new BasicAuthenticator(("packages")) {
+        server.createContext("/packages",new CrePackHandler()::handle);/*.setAuthenticator(new BasicAuthenticator(("packages")) {
             @Override
             public Result authenticate(HttpExchange t) {
                 return super.authenticate(t);
@@ -47,7 +47,7 @@ public class Main {
                 System.out.println(username + " : " + password);
                 return username.equals("") && password.equals("");
             }
-        });
+        });*/
         //https://tipsfordev.com/java-httpserver-basic-authentication-for-different-request-methods
         //critical part here!!!
 
@@ -69,21 +69,6 @@ public class Main {
         if("y".equalsIgnoreCase(input)){
             Database.initDb();
         }
-
-        /*public static void main (String[] args) throws Exception {
-            HttpServer server = HttpServer.create(new InetSocketAddress(0), 0);
-            try {
-                Handler handler = new Handler();
-                HttpContext ctx = server.createContext("/test", handler);
-
-                BasicAuthenticator a = new BasicAuthenticator(REALM) {
-                    public boolean checkCredentials (String username, String pw) {
-                        return USERNAME.equals(username) && PASSWORD.equals(pw);
-                    }
-                };
-                ctx.setAuthenticator(a);
-                server.start();*/
-
 
         //DatabaseConnection.getInstance().close();
     }

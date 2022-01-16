@@ -1,10 +1,9 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.tradings;
 
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class DeleteTradingDealHandler extends Handler {
 
@@ -13,7 +12,14 @@ public class DeleteTradingDealHandler extends Handler {
         System.out.println("-> TRADING-DELETE");
         //...delete trading deals here
 
-        printBody(new InputStreamReader(exchange.getRequestBody()));
+        String token = getAuthorizationToken(exchange);
+        String id = getURIName(exchange.getRequestURI().getPath());
+        if(isLogged(token)){
+            System.out.println("let's delete that");
+            DatabaseOperations.removeTradeFromDatabase(token, id);
+        }else{
+            System.out.println("User isn't logged in");
+        }
     }
 
 }

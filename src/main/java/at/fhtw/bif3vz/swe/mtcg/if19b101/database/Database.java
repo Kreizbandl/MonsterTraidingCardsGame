@@ -54,6 +54,97 @@ public class Database {
                         Token2 VARCHAR(50)
                     )
                     """);//remember winner?
+            DatabaseConnection.getInstance().executeSql("""
+                        CREATE TABLE IF NOT EXISTS Trades (
+                        Token VARCHAR(50),
+                        TradeId VARCHAR(100) UNIQUE PRIMARY KEY,
+                        CardToTrade VARCHAR(50),
+                        Type VARCHAR(50),
+                        MinimumDamage NUMERIC(4,2)
+                    )
+                    """);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void saveTrade(String token, TradeRecord trade){
+        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                INSERT INTO trades
+                (token, tradeid, cardtotrade, type, minimumdamage)
+                VALUES (?, ?, ?, ?, ?);
+                """ )
+        ) {
+            statement.setString(1, token);
+            statement.setString(2, trade.id());
+            statement.setString(3, trade.cardToTrade());
+            statement.setString(4, trade.type());
+            statement.setFloat(5, trade.minimumDamage());
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public TradeRecord getTrades(String token){
+        TradeRecord trade = new TradeRecord("-1","-1","-1","-1",-1);//record problem
+        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                SELECT token, tradeid, cardtotrade, type, minimumdamage 
+                FROM trades 
+                WHERE NOT token=?
+                """ )
+        ) {
+            statement.setString(1, token);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                return new TradeRecord(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getFloat(5)
+                );
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return trade;
+    }
+
+    public TradeRecord getTradeById(String id){
+        TradeRecord trade = new TradeRecord("-1","-1","-1" ,"-1",-1);
+        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                SELECT token, tradeid, cardtotrade, type, minimumdamage 
+                FROM trades 
+                WHERE tradeid=?
+                """ )
+        ) {
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                return new TradeRecord(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getFloat(5)
+                );
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return trade;
+    }
+
+    public void deleteTrade(String token, String id){//token immer übergeben -> bessere lösung ?
+        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                 DELETE FROM trades
+                WHERE tradeid=? AND token=?;
+                """ )
+        ) {
+            statement.setString(1, id);
+            statement.setString(2, token);
+            statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -274,6 +365,26 @@ public class Database {
             throwables.printStackTrace();
         }
         return cards;
+    }
+
+    public CardDB getCardById(String id){
+        CardDB card = new CardDB();
+        try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
+                SELECT id, name, damage FROM cards
+                WHERE id = ?;
+                """ )
+        ) {
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while( resultSet.next() ) {
+                card.setId(resultSet.getString(1));
+                card.setName(resultSet.getString(2));
+                card.setDamage(resultSet.getFloat(3));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return card;
     }
 
     public List<String> getUserCardIds(String token){

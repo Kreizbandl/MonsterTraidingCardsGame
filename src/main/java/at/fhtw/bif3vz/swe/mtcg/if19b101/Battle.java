@@ -18,6 +18,14 @@ public class Battle {
         deckUser2 = u2.getDeckOfUser();
     }
 
+    public List<Card> getDeckUser1() {
+        return deckUser1;
+    }
+
+    public List<Card> getDeckUser2() {
+        return deckUser2;
+    }
+
     public int showBattle(){
         //roundWinner 1, 0, -1
         int roundWinner, roundCount = 1;
