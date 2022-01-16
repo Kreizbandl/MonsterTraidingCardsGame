@@ -15,7 +15,6 @@ public class CreatePackageHandler extends Handler {
         System.out.println("-> CREATE PACKAGE");
         //...create Package
 
-        //String token = exchange.getRequestHeaders().get("Authorization").get(0);
         String token = getAuthorizationToken(exchange);
         if(!isLogged(token)){
             System.out.println("ERR: user isn't logged in");
@@ -25,8 +24,10 @@ public class CreatePackageHandler extends Handler {
                 System.out.println("package created");
                 List<CardDB> tc = mapCardsList(exchange.getRequestBody(), CardDB.class);
                 DatabaseOperations.writePackageToDatabase(tc);
+                exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
             }else{
                 System.out.println("ERROR - no admin");
+                exchange.sendResponseHeaders(StatusCode.FORBIDDEN.getCode(), -1);
             }
         }
     }

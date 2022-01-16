@@ -1,17 +1,14 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.MonsterCard;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.card.SpellCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.ElementType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.interfaces.CardOperations;
-//part of server
+
 public class Gamelogic {
 
     public Gamelogic() { }
 
-    //this function has to be called twice -> then compare returned int damage of first argument card
+    //this function has to be called twice -> then compare returned float damage of first argument card
     public float getFirstCurrentDamage(CardOperations card1, CardOperations card2){//Card card1, Card card2
 
         //both are monster cards -> just return damage
@@ -52,8 +49,6 @@ public class Gamelogic {
                             return 0;
                         }
                     }
-
-
 
                 //special: KRAKEN -> (any)SPELL
                     //fix gewonnen

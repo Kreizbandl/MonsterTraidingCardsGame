@@ -21,6 +21,7 @@ public class EditUserProfileHandler extends Handler {
 
         if(!token.contains(user)){
             System.out.println("ERR: token and path for user do not match");
+            exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{
             Map<String,String> list = mapRequestListMap(exchange.getRequestBody());
             List<String> data = new ArrayList<>();
@@ -29,6 +30,7 @@ public class EditUserProfileHandler extends Handler {
             data.add(list.get("Image"));
 
             DatabaseOperations.writeUserProfileToDatabase(token, data);
+            exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
         }
 
 

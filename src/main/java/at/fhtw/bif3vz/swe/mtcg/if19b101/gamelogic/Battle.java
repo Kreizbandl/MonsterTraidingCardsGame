@@ -1,4 +1,4 @@
-package at.fhtw.bif3vz.swe.mtcg.if19b101;
+package at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Gamelogic;
@@ -8,22 +8,14 @@ import java.util.List;
 
 public class Battle {
 
-    private List<Card> deckUser1;
-    private List<Card> deckUser2;
-    private Gamelogic gamelogic = new Gamelogic();
+    private final List<Card> deckUser1;
+    private final List<Card> deckUser2;
+    private final Gamelogic gamelogic = new Gamelogic();
 
     public Battle(User u1, User u2){
         //only use decks for battle
         deckUser1 = u1.getDeckOfUser();
         deckUser2 = u2.getDeckOfUser();
-    }
-
-    public List<Card> getDeckUser1() {
-        return deckUser1;
-    }
-
-    public List<Card> getDeckUser2() {
-        return deckUser2;
     }
 
     public int showBattle(){

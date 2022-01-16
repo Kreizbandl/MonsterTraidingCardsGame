@@ -17,8 +17,10 @@ public class DeleteTradingDealHandler extends Handler {
         if(isLogged(token)){
             System.out.println("let's delete that");
             DatabaseOperations.removeTradeFromDatabase(token, id);
+            exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
         }else{
             System.out.println("User isn't logged in");
+            exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }
     }
 

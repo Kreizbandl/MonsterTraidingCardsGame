@@ -4,10 +4,7 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.TradeRecord;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
 
 public class ExecuteTradingDealHandler extends Handler {
 
@@ -22,6 +19,7 @@ public class ExecuteTradingDealHandler extends Handler {
                 System.out.println("let's save that");
                 TradeRecord trade = mapRequest(exchange.getRequestBody(),TradeRecord.class);
                 DatabaseOperations.writeTradeToDatabase(token, trade);
+                exchange.sendResponseHeaders(StatusCode.CREATED.getCode(), 0);
             }else{
                 System.out.println("let's trade that");
                 String giveCardId = mapRequest(exchange.getRequestBody(), String.class);
@@ -29,16 +27,20 @@ public class ExecuteTradingDealHandler extends Handler {
                 int status = DatabaseOperations.tradeCards(token, tradeId, giveCardId);
                 if(status == -1){
                     System.out.println("ERR: You cannot trade with yourself");
+                    exchange.sendResponseHeaders(StatusCode.FORBIDDEN.getCode(), -1);
                 }else if(status == -2){
                     System.out.println("not enough damage");
-                }else if(status == -3){
+                    exchange.sendResponseHeaders(StatusCode.BADREQUEST.getCode(), -1);
+                }/*else if(status == -3){
                     System.out.println("wrong card type");
-                }else{
+                }*/else{
                     System.out.println("SUCCESS");
+                    exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
                 }
             }
         }else{
             System.out.println("ERR: User isn't logged in");
+            exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }
     }
 }

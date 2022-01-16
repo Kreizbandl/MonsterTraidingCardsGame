@@ -1,7 +1,5 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.database;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.server.TestPackage;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
 import java.sql.Connection;
 import java.sql.*;
 import java.util.*;
@@ -68,6 +66,7 @@ public class Database {
         }
     }
 
+    //trade
     public void saveTrade(String token, TradeRecord trade){
         try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
                 INSERT INTO trades
@@ -151,7 +150,7 @@ public class Database {
     }
 
     //user
-    public void saveUser(TestUser user) {
+    public void saveUser(UserDB user) {
         try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
                 INSERT INTO users
                 (username, password, token, coins, elo)
@@ -169,8 +168,8 @@ public class Database {
         }
     }
 
-    public TestUser getUserDataByName(String name){//besser mit username and password
-        TestUser user = new TestUser();
+    public UserDB getUserDataByName(String name){//besser mit username and password
+        UserDB user = new UserDB();
         try(PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
                 SELECT username, password, token 
                 FROM users 
@@ -591,8 +590,8 @@ public class Database {
     }
 
     //scoreboard
-    public HashMap<String, Integer> getScoreboard(){
-        HashMap<String, Integer> scoreboard = new HashMap<>();
+    public TreeMap<String, Integer> getScoreboard(){
+        TreeMap<String, Integer> scoreboard = new TreeMap<>(Comparator.reverseOrder());
         try ( PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement("""
                 SELECT username, elo FROM users;
                 """ )

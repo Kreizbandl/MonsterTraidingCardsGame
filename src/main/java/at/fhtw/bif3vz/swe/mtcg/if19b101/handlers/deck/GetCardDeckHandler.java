@@ -1,12 +1,10 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.deck;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.CardDB;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
 public class GetCardDeckHandler extends Handler {
@@ -24,14 +22,9 @@ public class GetCardDeckHandler extends Handler {
             List<CardDB> cards = DatabaseOperations.readDeckByToken(token);
             System.out.println("deck: " + cards);
 
-            byte[] response;//in function verpacken!
-            exchange.getResponseHeaders().set("Content-Type", "application/json");
-            exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
-            response = writeResponse(cards);
-
-            OutputStream responseBody = exchange.getResponseBody();
-            responseBody.write(response);
-            responseBody.close();
+            sendResponseHeader(exchange, StatusCode.OK.getCode(), 0);
+            byte[] response = writeResponse(cards);
+            sendResponseBody(exchange, response);
         }
     }
 }

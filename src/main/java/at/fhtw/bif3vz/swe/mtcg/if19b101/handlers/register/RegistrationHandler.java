@@ -2,7 +2,7 @@ package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.register;
 
 import at.fhtw.bif3vz.swe.mtcg.if19b101.database.DatabaseOperations;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.database.UserDB;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 
@@ -13,8 +13,8 @@ public class RegistrationHandler extends Handler {
         System.out.println("-> REGISTER");
         //...registration of new user
 
-        TestUser newUser = mapRequest(exchange.getRequestBody(),TestUser.class);
-        newUser.setToken("Basic " + newUser.getUsername() + "-mtcgToken");
+        UserDB newUser = mapRequest(exchange.getRequestBody(), UserDB.class);
+        newUser.setToken("Basic " + newUser.getUsername() + "-mtcgToken");//pseudo generate new token
         if(DatabaseOperations.writeUserToDatabase(newUser)){
             exchange.sendResponseHeaders(StatusCode.CREATED.getCode(), 0);
             System.out.println("new user registered");

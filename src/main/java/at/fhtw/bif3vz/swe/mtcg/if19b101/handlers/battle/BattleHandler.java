@@ -1,7 +1,6 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.battle;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.Battle;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.Main;
+import at.fhtw.bif3vz.swe.mtcg.if19b101.gamelogic.Battle;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.Card;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.MonsterCard;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.card.SpellCard;
@@ -12,7 +11,6 @@ import at.fhtw.bif3vz.swe.mtcg.if19b101.enumeration.MonsterType;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.handlers.Handler;
 import at.fhtw.bif3vz.swe.mtcg.if19b101.user.User;
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +28,13 @@ public class BattleHandler extends Handler {
             System.out.println("ERR: user isn't logged in");
             exchange.sendResponseHeaders(StatusCode.UNAUTHORIZED.getCode(), -1);
         }else{
-            int battleId = DatabaseOperations.loginForBattle(token);//problem here
+            int battleId = DatabaseOperations.loginForBattle(token);
             if(battleId == 0){
                 System.out.println("Waiting for player...");
+                exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
             }else if(battleId == -1){
                 System.out.println("ERR: You cannot play against yourself!");
+                exchange.sendResponseHeaders(StatusCode.FORBIDDEN.getCode(), 0);
             }else{
                 System.out.println("ready for battle");
                 //execute battle

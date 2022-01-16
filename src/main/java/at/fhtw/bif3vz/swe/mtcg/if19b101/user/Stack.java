@@ -8,20 +8,19 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Stack implements PackOperations {
-    private List<Card> stackCards = new ArrayList<>();
+    private final List<Card> stackCards = new ArrayList<>();
 
     public Stack(){}//ist zu beginn leer
 
-    //interface method
     public List<Card> getAllCards(){
         return this.stackCards;
     }
-    //interface method
+
     public void addCards(List<Card> cards){
         this.stackCards.addAll(cards);
     }
 
-    public List<Card> getBestFourCardsOfStack(){
+    /*public List<Card> getBestFourCardsOfStack(){
         List<Card> allStackCards = this.stackCards;
         Collections.sort(allStackCards, new Comparator<Card>()
                 {
@@ -32,5 +31,5 @@ public class Stack implements PackOperations {
                 }
         );
         return allStackCards.subList(0,4);
-    }
+    }*/
 }

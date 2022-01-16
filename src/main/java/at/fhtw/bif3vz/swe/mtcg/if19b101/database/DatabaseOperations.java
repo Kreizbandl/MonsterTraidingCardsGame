@@ -1,14 +1,9 @@
 package at.fhtw.bif3vz.swe.mtcg.if19b101.database;
 
-import at.fhtw.bif3vz.swe.mtcg.if19b101.server.TestPackage;
-import at.fhtw.bif3vz.swe.mtcg.if19b101.user.TestUser;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class DatabaseOperations {
 
-    //would be nice: function to enable other functions only if user is alloed to (auth-token)
     private static Database db = new Database();
 
     //trade
@@ -50,17 +45,16 @@ public class DatabaseOperations {
         db.updateCard(trade.cardToTrade(), token);
         db.updateCard(giveCardId, trade.token());
         db.deleteTrade(trade.token(), trade.id());
-
         return 0;
     }
 
     //user
-    public static boolean writeUserToDatabase(TestUser user) {
-        TestUser tmpUser = db.getUserDataByName(user.getUsername());
+    public static boolean writeUserToDatabase(UserDB user) {
+        UserDB tmpUser = db.getUserDataByName(user.getUsername());
         if(user.getUsername().equals(tmpUser.getUsername())){
             return false;
         }
-            db.saveUser( new TestUser(
+            db.saveUser( new UserDB(
                     user.getUsername(),
                     user.getPassword(),
                     user.getToken()
@@ -80,7 +74,7 @@ public class DatabaseOperations {
         return db.readUsernameByToken(token);
     }
 
-    public static TestUser readUserDataByName(String name){
+    public static UserDB readUserDataByName(String name){
         return db.getUserDataByName(name);
     }
 
@@ -186,7 +180,7 @@ public class DatabaseOperations {
     }
 
     //scoreboard
-    public static HashMap<String, Integer> readScoreboardFromDatabase(){//better pair?
+    public static TreeMap<String, Integer> readScoreboardFromDatabase(){//better pair?
         return db.getScoreboard();
     }
 
