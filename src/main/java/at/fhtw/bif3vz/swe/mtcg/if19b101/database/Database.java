@@ -51,7 +51,7 @@ public class Database {
                         Token1 VARCHAR(50),
                         Token2 VARCHAR(50)
                     )
-                    """);//remember winner?
+                    """);
             DatabaseConnection.getInstance().executeSql("""
                         CREATE TABLE IF NOT EXISTS Trades (
                         Token VARCHAR(50),

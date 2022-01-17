@@ -269,6 +269,16 @@ echo.
 curl -X GET http://localhost:10001/tradings --header "Authorization: Basic altenhof-mtcgToken"
 echo.
 
+
+REM --------------------------------------------------
+echo 22) Logout Users
+curl -X POST http://localhost:10001/sessions/logout --header "Authorization: Basic altenhof-mtcgToken"
+echo.
+curl -X POST http://localhost:10001/sessions/logout --header "Authorization: Basic kienboec-mtcgToken"
+echo.
+curl -X POST http://localhost:10001/sessions/logout --header "Authorization: Basic admin-mtcgToken"
+echo.
+
 REM --------------------------------------------------
 echo end...
 

@@ -14,30 +14,47 @@ public class LoginHandler extends Handler {
         System.out.println("-> LOGIN");
         //...login user
 
-        UserDB reqUser = mapRequest(exchange.getRequestBody(), UserDB.class);
-        UserDB dbUser = DatabaseOperations.readUserDataByName(reqUser.getUsername());//besser by username and password
 
-        if(isLogged(dbUser.getToken())){
-            System.out.println("ERR: user is already logged in");
-            exchange.sendResponseHeaders(StatusCode.NOCONTENT.getCode(), -1);
-        }else{
-            if(reqUser.getUsername().equals(dbUser.getUsername())){
-                byte[] response;
-                if(reqUser.getPassword().equals(dbUser.getPassword())){
-                    System.out.println("login ok");
-                    Main.loggedUsersTokenList.add(dbUser.getToken());
-                    exchange.getResponseHeaders().set("Content-Type", "application/json");
-                    exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
-                    response = writeResponse(dbUser.getToken());
-                    sendResponseBody(exchange, response);
-                }else{
-                    exchange.sendResponseHeaders(StatusCode.FORBIDDEN.getCode(), 0);
-                    System.out.println("ERR: wrong password");
-                }
-            }else{
+        if(exchange.getRequestURI().getPath().equals("/sessions")){
+            //login
+            UserDB reqUser = mapRequest(exchange.getRequestBody(), UserDB.class);
+            UserDB dbUser = DatabaseOperations.readUserDataByName(reqUser.getUsername());//besser by username and password
+            if(isLogged(dbUser.getToken())){
+                System.out.println("ERR: user is already logged in");
                 exchange.sendResponseHeaders(StatusCode.NOCONTENT.getCode(), -1);
-                System.out.println("ERR: user doesn't exist");
+            }else{
+                if(reqUser.getUsername().equals(dbUser.getUsername())){
+                    byte[] response;
+                    if(reqUser.getPassword().equals(dbUser.getPassword())){
+                        System.out.println("login ok");
+                        Main.loggedUsersTokenList.add(dbUser.getToken());
+                        exchange.getResponseHeaders().set("Content-Type", "application/json");
+                        exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
+                        response = writeResponse(dbUser.getToken());
+                        sendResponseBody(exchange, response);
+                    }else{
+                        exchange.sendResponseHeaders(StatusCode.FORBIDDEN.getCode(), 0);
+                        System.out.println("ERR: wrong password");
+                    }
+                }else{
+                    exchange.sendResponseHeaders(StatusCode.NOCONTENT.getCode(), -1);
+                    System.out.println("ERR: user doesn't exist");
+                }
+            }
+        }else{
+            //logout
+            String token = getAuthorizationToken(exchange);
+            if(!isLogged(token)){
+                System.out.println("ERR: You are not logged in");
+                exchange.sendResponseHeaders(StatusCode.FORBIDDEN.getCode(), -1);
+            }else{
+                //System.out.println(Main.loggedUsersTokenList.toString());
+                System.out.println("let's log you out");
+                Main.loggedUsersTokenList.remove(token);
+                System.out.println(Main.loggedUsersTokenList.toString());
+                exchange.sendResponseHeaders(StatusCode.OK.getCode(), 0);
             }
         }
+
     }
 }
